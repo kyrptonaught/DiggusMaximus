@@ -1,0 +1,13 @@
+{
+  "key.categories.diggusmaximus": "Ore Miner",
+  "key.diggusmaximus.excavate": "Excavate",
+  "key.diggusmaximus.config.category": "Options",
+  "key.diggusmaximus.config.maxmine": "Max mined blocks",
+  "key.diggusmaximus.config.maxdistance": "Max distance",
+  "key.diggusmaximus.config.autopickup": "Auto Pickup",
+  "key.diggusmaximus.config.requirestool": "Requires tool",
+  "key.diggusmaximus.config.toolduribility": "Tool durability",
+  "key.diggusmaximus.config.playerexhaustion": "Player Exhaustion",
+  "key.diggusmaximus.config.blacklistcat": "Blacklisted",
+  "key.diggusmaximus.config.blacklist": "Blacklisted Blocks"
+}

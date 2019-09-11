@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "diggusmaximus",
+  "version": "1.0.0",
+  "name": "Diggus Maximus",
+  "description": "Mine ores more better!",
+  "authors": [
+    "kyrptonaught"
+  ],
+  "contact": {
+    "homepage": "https://github.com/kyrptonaught/CMDKeybinds",
+    "sources": "https://github.com/kyrptonaught/CMDKeybinds"
+  },
+  "license": "MIT",
+  "icon": "assets/diggusmaximus/icon.png",
+  "environment": "*",
+  "mixins": [
+    {
+      "config": "net.kyrptonaught.diggusmaximus.json",
+      "environment": "client"
+    }
+  ],
+  "entrypoints": {
+    "main": [
+      "net.kyrptonaught.diggusmaximus.DiggusMaximusMod"
+    ],
+    "client": [
+      "net.kyrptonaught.diggusmaximus.DiggusMaximusMod"
+    ],
+    "modmenu": [
+      "net.kyrptonaught.diggusmaximus.config.modmenu.ModMenuIntegration"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  }
+}

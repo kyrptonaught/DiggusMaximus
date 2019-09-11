@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "net.kyrptonaught.diggusmaximus.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinBlockBreak"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
