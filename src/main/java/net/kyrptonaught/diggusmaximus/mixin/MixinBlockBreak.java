@@ -21,12 +21,12 @@ public abstract class MixinBlockBreak {
 
 
     @Inject(method = "onBreak", at = @At(value = "HEAD"), cancellable = true)
-    private void onBreak(World world_1, BlockPos blockPos_1, BlockState blockState_1, PlayerEntity playerEntity_1, CallbackInfo ci) {
-        String blockID = Registry.BLOCK.getId(blockState_1.getBlock()).toString();
-        if (!DiggusMaximusMod.configManager.blacklist.blacklist.contains(blockID))
+    private void DIGGUS$BLOCKBREAK(World world_1, BlockPos blockPos_1, BlockState blockState_1, PlayerEntity playerEntity_1, CallbackInfo ci) {
+        if (DiggusMaximusMod.getOptions().enabled) {
             if (GLFW.glfwGetKey(MinecraftClient.getInstance().window.getHandle(), DiggusMaximusMod.keyBinding.getBoundKey().getKeyCode()) == 1) {
-                StartExcavatePacket.sendExcavatePacket(blockPos_1, blockID);
+                StartExcavatePacket.sendExcavatePacket(blockPos_1, Registry.BLOCK.getId(blockState_1.getBlock()).toString());
                 ci.cancel();
             }
+        }
     }
 }

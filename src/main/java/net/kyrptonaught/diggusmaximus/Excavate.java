@@ -48,7 +48,6 @@ class Excavate {
             points.push(pos);
             mined++;
             mine(pos);
-            //((ServerPlayerEntity)player).interactionManager.tryBreakBlock(pos);
         }
     }
 
@@ -60,7 +59,7 @@ class Excavate {
             player.addExhaustion(0.005F);
         player.incrementStat(Stats.MINED.getOrCreateStat(startBlock));
         dropStacks(world, pos);
-        startBlock.onBreak(world, pos, world.getBlockState(pos), player);
+        //startBlock.onBreak(world, pos, world.getBlockState(pos), player);
         world.clearBlockState(pos, false);
         startBlock.onBroken(world, pos, world.getBlockState(pos));
     }

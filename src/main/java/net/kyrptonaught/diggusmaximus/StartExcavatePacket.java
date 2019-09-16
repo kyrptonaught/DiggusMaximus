@@ -18,11 +18,14 @@ public class StartExcavatePacket {
     static void registerReceivePacket() {
         ServerSidePacketRegistry.INSTANCE.register(START_EXCAVATE_PACKET, (packetContext, packetByteBuf) -> {
             BlockPos blockPos = packetByteBuf.readBlockPos();
-            Block block = Registry.BLOCK.get(new Identifier(packetByteBuf.readString()));
+            String blockID = packetByteBuf.readString();
+            Block block = Registry.BLOCK.get(new Identifier(blockID));
             packetContext.getTaskQueue().execute(() -> {
-                if (blockPos.isWithinDistance(packetContext.getPlayer().getPos(), 6)) {
-                    Excavate excavate = new Excavate(blockPos, block, packetContext.getPlayer());
-                    excavate.startExcavate();
+                if (DiggusMaximusMod.getOptions().enabled && !DiggusMaximusMod.configManager.blacklist.blacklist.contains(blockID)) {
+                    if (blockPos.isWithinDistance(packetContext.getPlayer().getPos(), 10)) {
+                        Excavate excavate = new Excavate(blockPos, block, packetContext.getPlayer());
+                        excavate.startExcavate();
+                    }
                 }
             });
         });

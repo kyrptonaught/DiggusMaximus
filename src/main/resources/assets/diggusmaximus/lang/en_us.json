@@ -1,7 +1,8 @@
 {
-  "key.categories.diggusmaximus": "Ore Miner",
+  "key.categories.diggusmaximus": "Diggus Maximus",
   "key.diggusmaximus.excavate": "Excavate",
   "key.diggusmaximus.config.category": "Options",
+  "key.diggusmaximus.config.enabled": "Enabled",
   "key.diggusmaximus.config.maxmine": "Max mined blocks",
   "key.diggusmaximus.config.maxdistance": "Max distance",
   "key.diggusmaximus.config.autopickup": "Auto Pickup",
