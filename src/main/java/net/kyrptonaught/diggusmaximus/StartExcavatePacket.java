@@ -12,13 +12,15 @@ import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 
+import java.nio.charset.StandardCharsets;
+
 public class StartExcavatePacket {
     private static final Identifier START_EXCAVATE_PACKET = new Identifier(DiggusMaximusMod.MOD_ID, "start_excavate_packet");
 
     static void registerReceivePacket() {
         ServerSidePacketRegistry.INSTANCE.register(START_EXCAVATE_PACKET, (packetContext, packetByteBuf) -> {
             BlockPos blockPos = packetByteBuf.readBlockPos();
-            String blockID = packetByteBuf.readString();
+            String blockID = new String(packetByteBuf.readByteArray());
             Block block = Registry.BLOCK.get(new Identifier(blockID));
             packetContext.getTaskQueue().execute(() -> {
                 if (DiggusMaximusMod.getOptions().enabled && !DiggusMaximusMod.configManager.blacklist.blacklist.contains(blockID)) {
@@ -35,7 +37,7 @@ public class StartExcavatePacket {
     public static void sendExcavatePacket(BlockPos blockPos, String blockID) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeBlockPos(blockPos);
-        buf.writeString(blockID);
+        buf.writeByteArray(blockID.getBytes(StandardCharsets.UTF_8));
         MinecraftClient.getInstance().getNetworkHandler().getConnection().send(new CustomPayloadC2SPacket(START_EXCAVATE_PACKET, new PacketByteBuf(buf)));
 
     }
