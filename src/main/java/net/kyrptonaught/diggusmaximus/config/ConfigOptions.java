@@ -6,6 +6,9 @@ public class ConfigOptions {
     @Comment("Mod enabled or disabled")
     public boolean enabled = true;
 
+    @Comment("Activation key")
+    public String keybinding = "key.keyboard.grave.accent";
+
     @Comment("Maximum number of blocks to mine")
     public int maxMinedBlocks = 40;
 

@@ -23,7 +23,7 @@ public class StartExcavatePacket {
             String blockID = new String(packetByteBuf.readByteArray());
             Block block = Registry.BLOCK.get(new Identifier(blockID));
             packetContext.getTaskQueue().execute(() -> {
-                if (DiggusMaximusMod.getOptions().enabled && !DiggusMaximusMod.configManager.blacklist.blacklist.contains(blockID)) {
+                if (DiggusMaximusMod.getOptions().enabled && canMine(blockID)) {
                     if (blockPos.isWithinDistance(packetContext.getPlayer().getPos(), 10)) {
                         Excavate excavate = new Excavate(blockPos, block, packetContext.getPlayer());
                         excavate.startExcavate();
@@ -31,6 +31,10 @@ public class StartExcavatePacket {
                 }
             });
         });
+    }
+
+    private static boolean canMine(String blockID) {
+        return DiggusMaximusMod.configManager.blacklist.isWhitelist == DiggusMaximusMod.configManager.blacklist.blacklist.contains(blockID);
     }
 
     @Environment(EnvType.CLIENT)

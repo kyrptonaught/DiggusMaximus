@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 
 public class Blacklist {
+    @Comment("Function as whitelist instead")
+    public boolean isWhitelist = false;
+
     @Comment("Block IDs to blacklist from being mined")
     public List<String> blacklistedBlocks = new ArrayList<>();
 

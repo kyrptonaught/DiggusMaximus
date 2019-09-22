@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "diggusmaximus",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": "Diggus Maximus",
   "description": "Mine ores more better!",
   "authors": [
@@ -22,9 +22,6 @@
   ],
   "entrypoints": {
     "main": [
-      "net.kyrptonaught.diggusmaximus.DiggusMaximusMod"
-    ],
-    "client": [
       "net.kyrptonaught.diggusmaximus.DiggusMaximusMod"
     ],
     "modmenu": [

@@ -1,19 +1,17 @@
 package net.kyrptonaught.diggusmaximus;
 
-import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
-import net.fabricmc.fabric.api.client.keybinding.KeyBindingRegistry;
 import net.kyrptonaught.diggusmaximus.config.ConfigManager;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
-public class DiggusMaximusMod implements ModInitializer, ClientModInitializer {
+public class DiggusMaximusMod implements ModInitializer {
     public static final String MOD_ID = "diggusmaximus";
-    private static final String KEY_BINDING_CATEGORY = "key.categories." + MOD_ID;
-    public static FabricKeyBinding keyBinding;
+
     public static ConfigManager configManager = new ConfigManager();
 
     @Override
@@ -23,16 +21,16 @@ public class DiggusMaximusMod implements ModInitializer, ClientModInitializer {
         StartExcavatePacket.registerReceivePacket();
     }
 
-    @Override
-    public void onInitializeClient() {
-        keyBinding = FabricKeyBinding.Builder.create(
-                new Identifier(MOD_ID, "excavate"),
-                InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_GRAVE_ACCENT,
-                KEY_BINDING_CATEGORY
-        ).build();
-        KeyBindingRegistry.INSTANCE.addCategory(KEY_BINDING_CATEGORY);
-        KeyBindingRegistry.INSTANCE.register(keyBinding);
+
+    public static InputUtil.KeyCode keycode;
+
+    @Environment(EnvType.CLIENT)
+    public static boolean isKeybindPressed() {
+        if (keycode == null)
+            keycode = InputUtil.fromName(getOptions().keybinding);
+        if (keycode.getCategory() == InputUtil.Type.MOUSE)
+            return GLFW.glfwGetMouseButton(MinecraftClient.getInstance().window.getHandle(), keycode.getKeyCode()) == 1;
+        return GLFW.glfwGetKey(MinecraftClient.getInstance().window.getHandle(), keycode.getKeyCode()) == 1;
     }
 
     public static ConfigOptions getOptions() {
