@@ -3,18 +3,14 @@ package net.kyrptonaught.diggusmaximus;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.minecraft.world.timer.Timer;
-import net.minecraft.world.timer.TimerCallback;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Stack;
 
 class Excavate {
     private BlockPos startPos;
@@ -59,6 +55,7 @@ class Excavate {
             mine(pos);
         }
     }
+
     private void mine(BlockPos pos) {
         // world.getLevelProperties().getScheduledEvents().addEvent(pos.toString(), world.getTime()+ 40, (var1, var2, var3) -> System.out.println("yooo" + var3));
         if (DiggusMaximusMod.getOptions().toolDuribility)
@@ -88,7 +85,7 @@ class Excavate {
         return mined < maxMined && isWithinDistance(pos) && toolHasDurability() && (player.isCreative() || player.isUsingEffectiveTool(player.world.getBlockState(pos)));
     }
 
-    private double distance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 256);
+    private double distance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 16);
 
     private boolean isWithinDistance(BlockPos pos) {
         return pos.isWithinDistance(startPos, distance);
