@@ -22,7 +22,7 @@ public abstract class MixinBlockBreak {
     private void DIGGUS$BLOCKBREAK(World world_1, BlockPos blockPos_1, BlockState blockState_1, PlayerEntity playerEntity_1, CallbackInfo ci) {
         if (DiggusMaximusMod.getOptions().enabled) {
             if (DiggusMaximusMod.isKeybindPressed()) {
-                StartExcavatePacket.sendExcavatePacket(blockPos_1, Registry.BLOCK.getId(blockState_1.getBlock()).toString());
+                StartExcavatePacket.sendExcavatePacket(blockPos_1, Registry.BLOCK.getRawId(blockState_1.getBlock()));
                 ci.cancel();
             }
         }

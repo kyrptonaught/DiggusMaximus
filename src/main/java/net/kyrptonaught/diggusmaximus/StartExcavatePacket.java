@@ -20,10 +20,10 @@ public class StartExcavatePacket {
     static void registerReceivePacket() {
         ServerSidePacketRegistry.INSTANCE.register(START_EXCAVATE_PACKET, (packetContext, packetByteBuf) -> {
             BlockPos blockPos = packetByteBuf.readBlockPos();
-            String blockID = new String(packetByteBuf.readByteArray());
-            Block block = Registry.BLOCK.get(new Identifier(blockID));
+            int blockID = packetByteBuf.readInt();
+            Block block = Registry.BLOCK.get(blockID);
             packetContext.getTaskQueue().execute(() -> {
-                if (DiggusMaximusMod.getOptions().enabled && canMine(blockID)) {
+                if (DiggusMaximusMod.getOptions().enabled && canMine(Registry.BLOCK.getId(block).toString())) {
                     if (blockPos.isWithinDistance(packetContext.getPlayer().getPos(), 10)) {
                         Excavate excavate = new Excavate(blockPos, block, packetContext.getPlayer());
                         excavate.startExcavate();
@@ -38,10 +38,10 @@ public class StartExcavatePacket {
     }
 
     @Environment(EnvType.CLIENT)
-    public static void sendExcavatePacket(BlockPos blockPos, String blockID) {
+    public static void sendExcavatePacket(BlockPos blockPos, int blockID) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeBlockPos(blockPos);
-        buf.writeByteArray(blockID.getBytes(StandardCharsets.UTF_8));
+        buf.writeInt(blockID);
         MinecraftClient.getInstance().getNetworkHandler().getConnection().send(new CustomPayloadC2SPacket(START_EXCAVATE_PACKET, new PacketByteBuf(buf)));
 
     }

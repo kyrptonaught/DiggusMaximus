@@ -3,12 +3,17 @@ package net.kyrptonaught.diggusmaximus;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.timer.Timer;
+import net.minecraft.world.timer.TimerCallback;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 class Excavate {
@@ -17,21 +22,25 @@ class Excavate {
     private Block startBlock;
     private int mined = 1;
     private ItemStack tool;
+    private World world;
 
     Excavate(BlockPos pos, Block block, PlayerEntity player) {
         this.startPos = pos;
         this.player = player;
         this.tool = player.inventory.getMainHandStack();
         this.startBlock = block;
+        this.world = player.getEntityWorld();
     }
 
-    private Stack<BlockPos> points = new Stack<>();
+    private Deque<BlockPos> points = new ArrayDeque<>();
 
     void startExcavate() {
-        spiral(startPos);
-        while (!points.empty()) {
-            spiral(points.remove(0));
+        points.add(startPos);
+        while (!points.isEmpty()) {
+            spiral(points.remove());
         }
+        if (DiggusMaximusMod.getOptions().playerExhaustion)
+            player.addExhaustion(0.005F * mined);
     }
 
     private void spiral(BlockPos pos) {
@@ -45,18 +54,15 @@ class Excavate {
 
     private void point(BlockPos pos) {
         if (player.getEntityWorld().getBlockState(pos).getBlock().equals(startBlock) && canMine(pos)) {
-            points.push(pos);
+            points.add(pos);
             mined++;
             mine(pos);
         }
     }
-
     private void mine(BlockPos pos) {
-        World world = player.getEntityWorld();
+        // world.getLevelProperties().getScheduledEvents().addEvent(pos.toString(), world.getTime()+ 40, (var1, var2, var3) -> System.out.println("yooo" + var3));
         if (DiggusMaximusMod.getOptions().toolDuribility)
             tool.postMine(world, world.getBlockState(pos), pos, player);
-        if (DiggusMaximusMod.getOptions().playerExhaustion)
-            player.addExhaustion(0.005F);
         player.incrementStat(Stats.MINED.getOrCreateStat(startBlock));
         dropStacks(world, pos);
         //startBlock.onBreak(world, pos, world.getBlockState(pos), player);
@@ -67,19 +73,24 @@ class Excavate {
     private void dropStacks(World world, BlockPos pos) {
         if (player.isCreative()) return;
         Block.getDroppedStacks(world.getBlockState(pos), (ServerWorld) world, pos, null, player, tool).forEach((stack) -> {
-            if (DiggusMaximusMod.getOptions().autoPickup) player.inventory.insertStack(stack);
-            else Block.dropStack(world, pos, stack);
+            if (DiggusMaximusMod.getOptions().autoPickup) {
+                player.inventory.insertStack(stack);
+                if (stack.getCount() > 0)
+                    Block.dropStack(world, pos, stack);
+            } else Block.dropStack(world, pos, stack);
         });
         startBlock.onStacksDropped(world.getBlockState(pos), world, pos, tool);
     }
 
+    private int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 256);
+
     private boolean canMine(BlockPos pos) {
-        int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 256);
         return mined < maxMined && isWithinDistance(pos) && toolHasDurability() && (player.isCreative() || player.isUsingEffectiveTool(player.world.getBlockState(pos)));
     }
 
+    private double distance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 256);
+
     private boolean isWithinDistance(BlockPos pos) {
-        double distance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 256);
         return pos.isWithinDistance(startPos, distance);
     }
 
