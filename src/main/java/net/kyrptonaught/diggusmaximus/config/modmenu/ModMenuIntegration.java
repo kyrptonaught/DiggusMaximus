@@ -39,6 +39,7 @@ public class ModMenuIntegration implements ModMenuApi {
             category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.enabled", options.enabled).setSaveConsumer(val -> options.enabled = val).setDefaultValue(true).build());
 
             category.addEntry(new KeyBindEntry("key.diggusmaximus.config.hotkey", options.keybinding, key -> options.keybinding = key));
+            category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.minediag", options.mineDiag).setSaveConsumer(val -> options.mineDiag = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startIntField("key.diggusmaximus.config.maxmine", options.maxMinedBlocks).setSaveConsumer(val -> options.maxMinedBlocks = val).setDefaultValue(40).build());
             category.addEntry(entryBuilder.startIntField("key.diggusmaximus.config.maxdistance", options.maxMineDistance).setSaveConsumer(val -> options.maxMineDistance = val).setDefaultValue(10).build());
 
