@@ -9,6 +9,9 @@ public class ConfigOptions {
     @Comment("Activation key")
     public String keybinding = "key.keyboard.grave.accent";
 
+    @Comment("Should mine diagonally")
+    public boolean mineDiag = true;
+
     @Comment("Maximum number of blocks to mine")
     public int maxMinedBlocks = 40;
 

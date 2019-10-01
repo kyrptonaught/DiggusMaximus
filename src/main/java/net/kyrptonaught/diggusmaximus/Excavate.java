@@ -1,12 +1,15 @@
 package net.kyrptonaught.diggusmaximus;
 
+import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.CuboidBlockIterator;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 import java.util.ArrayDeque;
@@ -40,14 +43,56 @@ class Excavate {
     }
 
     private void spiral(BlockPos pos) {
-        point(pos.offset(Direction.NORTH));
-        point(pos.offset(Direction.EAST));
-        point(pos.offset(Direction.SOUTH));
-        point(pos.offset(Direction.WEST));
-        point(pos.offset(Direction.UP));
-        point(pos.offset(Direction.DOWN));
-    }
+        point(pos.north());
+        point(pos.east());
+        point(pos.south());
+        point(pos.west());
+        point(pos.up());
+        point(pos.down());
+       /* BlockPos.stream(-1,-1,-1,1,1,1).forEach(testPos ->{
+            if(isValidPos(testPos))
+                point(testPos);
+        });
+        */
+        point(pos.add(1,0,0));
+        point(pos.add(0,0,1));
+        point(pos.add(-1,0,0));
+        point(pos.add(0,0,-1));
+        point(pos.add(0,1,0));
+        point(pos.add(0,-1,0));
 
+        if (DiggusMaximusMod.getOptions().mineDiag) {
+            point(pos.add(1, 0, 1));
+            point(pos.add(1, 0, -1));
+            point(pos.add(-1, 0, 1));
+            point(pos.add(-1, 0, -1));
+
+            point(pos.add(1,1,0));
+            point(pos.add(-1,1,0));
+            point(pos.add(1,-1,0));
+            point(pos.add(-1,-1,0));
+
+            point(pos.add(0,1,1));
+            point(pos.add(0,1,-1));
+            point(pos.add(0,-1,1));
+            point(pos.add(0,-1,-1));
+
+            point(pos.add(1, 1, 1));
+            point(pos.add(1, -1, 1));
+            point(pos.add(-1, 1, 1));
+            point(pos.add(-1, -1, 1));
+
+            point(pos.add(1, 1, -1));
+            point(pos.add(1, -1, -1));
+            point(pos.add(-1, 1, -1));
+            point(pos.add(-1, -1, -1));
+        }
+    }
+private boolean isValidPos(BlockPos pos){
+        if(DiggusMaximusMod.getOptions().mineDiag)
+            return true;
+        return Math.abs(pos.getX()) + Math.abs(pos.getY()) + Math.abs(pos.getZ()) == 1;
+}
     private void point(BlockPos pos) {
         if (player.getEntityWorld().getBlockState(pos).getBlock().equals(startBlock) && canMine(pos)) {
             points.add(pos);
