@@ -21,7 +21,7 @@ class Excavate {
     private ItemStack tool;
     private World world;
     private static final Set<BlockPos> cube = BlockPos.stream(-1, -1, -1, 1, 1, 1).map(BlockPos::toImmutable).collect(Collectors.toSet());
-    private final int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 1024);
+    private final int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 2048);
     private final double maxDistance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 128);
     private Deque<BlockPos> points = new ArrayDeque<>();
 
