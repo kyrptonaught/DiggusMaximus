@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,8 +21,8 @@ class Excavate {
     private ItemStack tool;
     private World world;
     private static final Set<BlockPos> cube = BlockPos.stream(-1, -1, -1, 1, 1, 1).map(BlockPos::toImmutable).collect(Collectors.toSet());
-    private final int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 256);
-    private final double maxDistance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 16);
+    private final int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 1024);
+    private final double maxDistance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 32);
     private Deque<BlockPos> points = new ArrayDeque<>();
 
     Excavate(BlockPos pos, Block block, PlayerEntity player) {
