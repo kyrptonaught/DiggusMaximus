@@ -29,8 +29,8 @@ public class DiggusMaximusMod implements ModInitializer {
         if (keycode == null)
             keycode = InputUtil.fromName(getOptions().keybinding);
         if (keycode.getCategory() == InputUtil.Type.MOUSE)
-            return GLFW.glfwGetMouseButton(MinecraftClient.getInstance().window.getHandle(), keycode.getKeyCode()) == 1;
-        return GLFW.glfwGetKey(MinecraftClient.getInstance().window.getHandle(), keycode.getKeyCode()) == 1;
+            return GLFW.glfwGetMouseButton(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getKeyCode()) == 1;
+        return GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getKeyCode()) == 1;
     }
 
     public static ConfigOptions getOptions() {

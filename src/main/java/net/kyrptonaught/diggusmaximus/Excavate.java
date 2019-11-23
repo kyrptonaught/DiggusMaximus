@@ -1,6 +1,7 @@
 package net.kyrptonaught.diggusmaximus;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -54,7 +55,7 @@ class Excavate {
             point(pos.south());
             point(pos.west());
             point(pos.up());
-            point(pos.down());
+            point(pos.down(1));
         }
     }
 
@@ -75,7 +76,7 @@ class Excavate {
             tool.postMine(world, world.getBlockState(pos), pos, player);
         player.incrementStat(Stats.MINED.getOrCreateStat(startBlock));
         dropStacks(world, pos);
-        world.clearBlockState(pos, false);
+        world.setBlockState(pos, Blocks.AIR.getDefaultState());
         startBlock.onBroken(world, pos, world.getBlockState(pos));
     }
 
