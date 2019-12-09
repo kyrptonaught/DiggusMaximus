@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
@@ -82,7 +84,8 @@ class Excavate {
 
     private void dropStacks(World world, BlockPos pos) {
         if (player.isCreative()) return;
-        Block.getDroppedStacks(world.getBlockState(pos), (ServerWorld) world, pos, null, player, tool).forEach((stack) -> {
+       LootContext.Builder lootContext$Builder_1 = (new LootContext.Builder((ServerWorld) world)).setRandom(((ServerWorld) world).random).put(LootContextParameters.POSITION, pos).put(LootContextParameters.TOOL, tool).put(LootContextParameters.THIS_ENTITY, player).putNullable(LootContextParameters.BLOCK_ENTITY, world.getBlockEntity(pos));
+        startBlock.getDroppedStacks(world.getBlockState(pos), lootContext$Builder_1).forEach((stack) -> {
             if (DiggusMaximusMod.getOptions().autoPickup) {
                 player.inventory.insertStack(stack);
                 if (stack.getCount() > 0)
