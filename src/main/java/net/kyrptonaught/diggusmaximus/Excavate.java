@@ -1,8 +1,11 @@
 package net.kyrptonaught.diggusmaximus;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
@@ -56,7 +59,7 @@ class Excavate {
             point(pos.south());
             point(pos.west());
             point(pos.up());
-            point(pos.down());
+            point(pos.down(1));
         }
     }
 
@@ -77,13 +80,14 @@ class Excavate {
             tool.postMine(world, world.getBlockState(pos), pos, player);
         player.incrementStat(Stats.MINED.getOrCreateStat(startBlock));
         dropStacks(world, pos);
-        world.clearBlockState(pos, false);
+        world.setBlockState(pos, Blocks.AIR.getDefaultState());
         startBlock.onBroken(world, pos, world.getBlockState(pos));
     }
 
     private void dropStacks(World world, BlockPos pos) {
         if (player.isCreative()) return;
-        LootContext.Builder lootContext$Builder_1 = (new LootContext.Builder((ServerWorld) world)).setRandom(((ServerWorld) world).random).put(LootContextParameters.POSITION, pos).put(LootContextParameters.TOOL, tool).put(LootContextParameters.THIS_ENTITY, player).putNullable(LootContextParameters.BLOCK_ENTITY, world.getBlockEntity(pos));
+      
+       LootContext.Builder lootContext$Builder_1 = (new LootContext.Builder((ServerWorld) world)).setRandom(((ServerWorld) world).random).put(LootContextParameters.POSITION, pos).put(LootContextParameters.TOOL, tool).put(LootContextParameters.THIS_ENTITY, player).putNullable(LootContextParameters.BLOCK_ENTITY, world.getBlockEntity(pos));
         startBlock.getDroppedStacks(world.getBlockState(pos), lootContext$Builder_1).forEach((stack) -> {
             if (DiggusMaximusMod.getOptions().autoPickup) {
                 player.inventory.insertStack(stack);
