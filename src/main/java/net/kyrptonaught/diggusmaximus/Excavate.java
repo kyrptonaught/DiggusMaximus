@@ -10,6 +10,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.loot.context.LootContext;
+import net.minecraft.world.loot.context.LootContextParameters;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -84,6 +86,7 @@ class Excavate {
 
     private void dropStacks(World world, BlockPos pos) {
         if (player.isCreative()) return;
+      
        LootContext.Builder lootContext$Builder_1 = (new LootContext.Builder((ServerWorld) world)).setRandom(((ServerWorld) world).random).put(LootContextParameters.POSITION, pos).put(LootContextParameters.TOOL, tool).put(LootContextParameters.THIS_ENTITY, player).putNullable(LootContextParameters.BLOCK_ENTITY, world.getBlockEntity(pos));
         startBlock.getDroppedStacks(world.getBlockState(pos), lootContext$Builder_1).forEach((stack) -> {
             if (DiggusMaximusMod.getOptions().autoPickup) {
