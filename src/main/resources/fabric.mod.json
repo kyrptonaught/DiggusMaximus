@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "diggusmaximus",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "name": "Diggus Maximus",
   "description": "Mine ores more better!",
   "authors": [
     "kyrptonaught"
   ],
   "contact": {
-    "homepage": "https://github.com/kyrptonaught/DiggusMaximus",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/diggus-maximus",
     "sources": "https://github.com/kyrptonaught/DiggusMaximus"
   },
   "license": "MIT",

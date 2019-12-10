@@ -10,8 +10,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.loot.context.LootContext;
-import net.minecraft.world.loot.context.LootContextParameters;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -59,7 +57,7 @@ class Excavate {
             point(pos.south());
             point(pos.west());
             point(pos.up());
-            point(pos.down(1));
+            point(pos.down());
         }
     }
 
