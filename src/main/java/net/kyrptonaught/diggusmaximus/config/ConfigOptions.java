@@ -2,7 +2,7 @@ package net.kyrptonaught.diggusmaximus.config;
 
 import blue.endless.jankson.Comment;
 
-public class ConfigOptions {
+public class ConfigOptions implements AbstractConfigFile {
     @Comment("Mod enabled or disabled")
     public boolean enabled = true;
 
@@ -29,5 +29,4 @@ public class ConfigOptions {
 
     @Comment("Should player get exhaustion")
     public boolean playerExhaustion = true;
-
 }

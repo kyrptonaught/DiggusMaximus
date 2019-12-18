@@ -7,6 +7,7 @@ import net.kyrptonaught.diggusmaximus.config.ConfigManager;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public class DiggusMaximusMod implements ModInitializer {
@@ -17,7 +18,8 @@ public class DiggusMaximusMod implements ModInitializer {
     @Override
     public void onInitialize() {
         configManager.loadAll();
-        configManager.blacklist.generateHash();
+        configManager.getBlackList().generateHash();
+        configManager.getGrouping().generateLookup();
         StartExcavatePacket.registerReceivePacket();
     }
 
@@ -34,6 +36,10 @@ public class DiggusMaximusMod implements ModInitializer {
     }
 
     public static ConfigOptions getOptions() {
-        return configManager.config;
+        return configManager.getOptions();
+    }
+
+    public static Identifier getIDFromConfigLookup(Identifier blockID) {
+        return configManager.getGrouping().lookup.getOrDefault(blockID, blockID);
     }
 }

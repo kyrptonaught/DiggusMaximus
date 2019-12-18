@@ -8,7 +8,9 @@ import me.shedaniel.clothconfig2.gui.entries.StringListListEntry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.kyrptonaught.diggusmaximus.DiggusMaximusMod;
+import net.kyrptonaught.diggusmaximus.ExcavateHelper;
 import net.kyrptonaught.diggusmaximus.config.Blacklist;
+import net.kyrptonaught.diggusmaximus.config.BlockCategory;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
 import net.minecraft.client.gui.screen.Screen;
 
@@ -31,7 +33,9 @@ public class ModMenuIntegration implements ModMenuApi {
             builder.setSavingRunnable(() -> {
                 DiggusMaximusMod.configManager.saveAll();
                 DiggusMaximusMod.keycode = null;
-                DiggusMaximusMod.configManager.blacklist.generateHash();
+                DiggusMaximusMod.configManager.getBlackList().generateHash();
+                DiggusMaximusMod.configManager.getGrouping().generateLookup();
+                ExcavateHelper.resetMaximums();
             });
             ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
 
@@ -48,10 +52,15 @@ public class ModMenuIntegration implements ModMenuApi {
             category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.toolduribility", options.toolDuribility).setSaveConsumer(val -> options.toolDuribility = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.playerexhaustion", options.playerExhaustion).setSaveConsumer(val -> options.playerExhaustion = val).setDefaultValue(true).build());
 
-            Blacklist blacklist = DiggusMaximusMod.configManager.blacklist;
+            Blacklist blacklist = DiggusMaximusMod.configManager.getBlackList();
             ConfigCategory blacklistCat = builder.getOrCreateCategory("key.diggusmaximus.config.blacklistcat");
             blacklistCat.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.invertlist", blacklist.isWhitelist).setSaveConsumer(val -> blacklist.isWhitelist = val).setDefaultValue(false).build());
             blacklistCat.addEntry(entryBuilder.startStrList("key.diggusmaximus.config.blacklist", blacklist.blacklistedBlocks).setSaveConsumer(val -> blacklist.blacklistedBlocks = val).setDefaultValue(new ArrayList<>())
+                    .setCreateNewInstance(baseListEntry -> new StringListListEntry.StringListCell("minecraft:", (StringListListEntry) baseListEntry)).build());
+
+            BlockCategory grouping = DiggusMaximusMod.configManager.getGrouping();
+            ConfigCategory groupcat = builder.getOrCreateCategory("key.diggusmaximus.config.groupcat");
+            groupcat.addEntry(entryBuilder.startStrList("key.diggusmaximus.config.grouplist", grouping.groups).setSaveConsumer(val -> grouping.groups = val).setDefaultValue(new ArrayList<>())
                     .setCreateNewInstance(baseListEntry -> new StringListListEntry.StringListCell("minecraft:", (StringListListEntry) baseListEntry)).build());
             return builder.build();
         };

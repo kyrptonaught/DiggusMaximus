@@ -13,5 +13,7 @@
   "key.diggusmaximus.config.playerexhaustion": "Player Exhaustion",
   "key.diggusmaximus.config.blacklistcat": "Blacklisted",
   "key.diggusmaximus.config.invertlist": "Use as Whitelist",
-  "key.diggusmaximus.config.blacklist": "Blacklisted Blocks"
+  "key.diggusmaximus.config.blacklist": "Blacklisted Blocks",
+  "key.diggusmaximus.config.groupcat": "Block Grouping",
+  "key.diggusmaximus.config.grouplist": "Groups"
 }
