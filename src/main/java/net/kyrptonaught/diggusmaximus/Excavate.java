@@ -31,7 +31,7 @@ class Excavate {
 
     void startExcavate() {
         if (startID == null) return;
-        points.add(startPos);
+        excavateAt(startPos);
         while (!points.isEmpty()) {
             spread(points.remove());
         }

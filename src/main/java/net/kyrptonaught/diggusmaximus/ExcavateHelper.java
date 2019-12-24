@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ExcavateHelper {
-    public static final Set<BlockPos> cube = BlockPos.stream(-1, -1, -1, 1, 1, 1).map(BlockPos::toImmutable).collect(Collectors.toSet());
+    static final Set<BlockPos> cube = BlockPos.stream(-1, -1, -1, 1, 1, 1).map(BlockPos::toImmutable).collect(Collectors.toSet());
     private static int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 2048);
     private static double maxDistance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 128);
 
@@ -48,11 +48,11 @@ public class ExcavateHelper {
         return mined < maxMined && isWithinDistance(startPos, pos) && canUseTool(player);
     }
 
-    static boolean isWithinDistance(BlockPos startPos, BlockPos pos) {
+    private static boolean isWithinDistance(BlockPos startPos, BlockPos pos) {
         return pos.isWithinDistance(startPos, maxDistance);
     }
 
-    static boolean canUseTool(PlayerEntity player) {
+    private static boolean canUseTool(PlayerEntity player) {
         if (player.isCreative()) return true;
         if (!player.inventory.getMainHandStack().isDamageable())
             return !DiggusMaximusMod.getOptions().requiresTool;
