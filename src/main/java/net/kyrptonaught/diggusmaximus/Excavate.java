@@ -1,20 +1,15 @@
 package net.kyrptonaught.diggusmaximus;
 
-import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.List;
 
 class Excavate {
     private BlockPos startPos;
@@ -31,7 +26,7 @@ class Excavate {
         Block block = world.getBlockState(pos).getBlock();
         if (ExcavateHelper.configAllowsMining(Registry.BLOCK.getId(block).toString()))
             this.startID = DiggusMaximusMod.getIDFromConfigLookup(Registry.BLOCK.getId(block));
-        TagRegistry.block(startID).entries().forEach(System.out::println);
+        //TagRegistry.block(startID).entries().forEach(System.out::println);
     }
 
     void startExcavate() {
@@ -65,15 +60,8 @@ class Excavate {
         if (block.equals(startID) && ExcavateHelper.canMine(player, mined, startPos, pos) && ((ServerPlayerEntity) player).interactionManager.tryBreakBlock(pos)) {
             points.add(pos);
             mined++;
-            if (DiggusMaximusMod.getOptions().autoPickup) {
-                List<ItemEntity> drops = world.getEntities(ItemEntity.class, new Box(pos), null);
-                drops.forEach(item -> {
-                    ItemStack stack = item.getStack();
-                    player.inventory.insertStack(stack);
-                    if (stack.getCount() <= 0)
-                        item.remove();
-                });
-            }
+            if (DiggusMaximusMod.getOptions().autoPickup)
+                ExcavateHelper.pickupDrops(world, pos, player);
         }
     }
 }

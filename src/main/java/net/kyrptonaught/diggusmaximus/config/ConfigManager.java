@@ -27,7 +27,7 @@ public class ConfigManager {
         }
         this.configFile = new File(dir, "config.json5");
         this.ignoreFile = new File(dir, "blacklist.json5");
-        this.groupFile = new File(dir, "grouping.json5.bak");
+        this.groupFile = new File(dir, "grouping.json5");
 
     }
 

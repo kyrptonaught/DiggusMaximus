@@ -1,10 +1,14 @@
 package net.kyrptonaught.diggusmaximus;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +20,16 @@ public class ExcavateHelper {
     public static void resetMaximums() {
         maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 2048);
         maxDistance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 128);
+    }
+
+    static void pickupDrops(World world, BlockPos pos, PlayerEntity player) {
+        List<ItemEntity> drops = world.getEntities(ItemEntity.class, new Box(pos), null);
+        drops.forEach(item -> {
+            ItemStack stack = item.getStack();
+            player.inventory.insertStack(stack);
+            if (stack.getCount() <= 0)
+                item.remove();
+        });
     }
 
     static boolean configAllowsMining(String blockID) {
