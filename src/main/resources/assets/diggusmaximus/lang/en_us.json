@@ -15,5 +15,7 @@
   "key.diggusmaximus.config.invertlist": "Use as Whitelist",
   "key.diggusmaximus.config.blacklist": "Blacklisted Blocks",
   "key.diggusmaximus.config.groupcat": "Block Grouping",
+  "key.diggusmaximus.config.taggrouping": "Use tag grouping",
+  "key.diggusmaximus.config.customgrouping": "Use custom grouping",
   "key.diggusmaximus.config.grouplist": "Groups"
 }

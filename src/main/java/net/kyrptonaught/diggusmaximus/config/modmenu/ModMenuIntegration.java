@@ -60,6 +60,8 @@ public class ModMenuIntegration implements ModMenuApi {
 
             BlockCategory grouping = DiggusMaximusMod.configManager.getGrouping();
             ConfigCategory groupcat = builder.getOrCreateCategory("key.diggusmaximus.config.groupcat");
+            groupcat.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.taggrouping", grouping.tagGrouping).setSaveConsumer(val -> grouping.tagGrouping = val).setDefaultValue(false).build());
+            groupcat.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.customgrouping", grouping.customGrouping).setSaveConsumer(val -> grouping.customGrouping = val).setDefaultValue(false).build());
             groupcat.addEntry(entryBuilder.startStrList("key.diggusmaximus.config.grouplist", grouping.groups).setSaveConsumer(val -> grouping.groups = val).setDefaultValue(new ArrayList<>())
                     .setCreateNewInstance(baseListEntry -> new StringListListEntry.StringListCell("minecraft:", (StringListListEntry) baseListEntry)).build());
             return builder.build();

@@ -15,7 +15,7 @@ class Excavate {
     private BlockPos startPos;
     private PlayerEntity player;
     private Identifier startID;
-    private int mined = 1;
+    private int mined = 0;
     private World world;
     private Deque<BlockPos> points = new ArrayDeque<>();
 
@@ -24,14 +24,14 @@ class Excavate {
         this.player = player;
         this.world = player.getEntityWorld();
         Block block = world.getBlockState(pos).getBlock();
-        if (ExcavateHelper.configAllowsMining(Registry.BLOCK.getId(block).toString()))
-            this.startID = DiggusMaximusMod.getIDFromConfigLookup(Registry.BLOCK.getId(block));
-        //TagRegistry.block(startID).entries().forEach(System.out::println);
+        Identifier id = Registry.BLOCK.getId(block);
+        if (ExcavateHelper.configAllowsMining(id.toString()))
+            this.startID = id;
     }
 
     void startExcavate() {
+        forceExcavateAt(startPos);
         if (startID == null) return;
-        excavateAt(startPos);
         while (!points.isEmpty()) {
             spread(points.remove());
         }
@@ -56,8 +56,17 @@ class Excavate {
     }
 
     private void excavateAt(BlockPos pos) {
-        Identifier block = DiggusMaximusMod.getIDFromConfigLookup(Registry.BLOCK.getId(ExcavateHelper.getBlockAt(world, pos)));
-        if (block.equals(startID) && ExcavateHelper.canMine(player, mined, startPos, pos) && ((ServerPlayerEntity) player).interactionManager.tryBreakBlock(pos)) {
+        Identifier block = Registry.BLOCK.getId(ExcavateHelper.getBlockAt(world, pos));
+        if (ExcavateHelper.isTheSameBlock(startID, block, world) && ExcavateHelper.canMine(player, mined, startPos, pos) && ((ServerPlayerEntity) player).interactionManager.tryBreakBlock(pos)) {
+            points.add(pos);
+            mined++;
+            if (DiggusMaximusMod.getOptions().autoPickup)
+                ExcavateHelper.pickupDrops(world, pos, player);
+        }
+    }
+
+    private void forceExcavateAt(BlockPos pos) {
+        if (((ServerPlayerEntity) player).interactionManager.tryBreakBlock(pos)) {
             points.add(pos);
             mined++;
             if (DiggusMaximusMod.getOptions().autoPickup)

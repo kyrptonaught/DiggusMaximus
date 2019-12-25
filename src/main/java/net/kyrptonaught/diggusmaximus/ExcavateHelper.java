@@ -1,13 +1,20 @@
 package net.kyrptonaught.diggusmaximus;
 
+import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.tag.Tag;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,6 +37,24 @@ public class ExcavateHelper {
             if (stack.getCount() <= 0)
                 item.remove();
         });
+
+    }
+
+    static boolean isTheSameBlock(Identifier startID, Identifier newID, World world) {
+        if (DiggusMaximusMod.configManager.getGrouping().tagGrouping) {
+            Block newBlock = Registry.BLOCK.get(newID);
+            for (Identifier tagID : world.getTagManager().blocks().getTagsFor(Registry.BLOCK.get(startID))) {
+                if (TagRegistry.block(tagID).contains(newBlock)) {
+                    newID = startID;
+                    break;
+                }
+            }
+        }
+        if (DiggusMaximusMod.configManager.getGrouping().customGrouping) {
+            newID = DiggusMaximusMod.getIDFromConfigLookup(newID);
+            startID = DiggusMaximusMod.getIDFromConfigLookup(startID);
+        }
+        return startID.equals(newID);
     }
 
     static boolean configAllowsMining(String blockID) {

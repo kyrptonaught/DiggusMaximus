@@ -8,7 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BlockCategory implements AbstractConfigFile {
+    @Comment("Consider blocks in the same tag as the same block")
+    public boolean tagGrouping = false;
 
+    @Comment("Enable block custom grouping")
+    public boolean customGrouping = false;
     @Comment("BlockID to be considered the same block when excavating")
     public List<String> groups = new ArrayList<>();
 
