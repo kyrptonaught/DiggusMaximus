@@ -13,7 +13,7 @@ public class BlockCategory implements AbstractConfigFile {
 
     @Comment("Enable block custom grouping")
     public boolean customGrouping = false;
-    @Comment("BlockID to be considered the same block when excavating")
+    @Comment("BlockID to be considered the same block when excavating (IDs separated by commas)")
     public List<String> groups = new ArrayList<>();
 
     public transient HashMap<Identifier, Identifier> lookup = new HashMap<>();
