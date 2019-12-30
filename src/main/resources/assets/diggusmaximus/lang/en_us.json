@@ -10,6 +10,8 @@
   "key.diggusmaximus.config.autopickup": "Auto Pickup",
   "key.diggusmaximus.config.requirestool": "Requires tool",
   "key.diggusmaximus.config.toolduribility": "Tool durability",
+  "key.diggusmaximus.config.stopontoolbreak": "Stop on tool breakage",
+  "key.diggusmaximus.config.dontbreaktool": "Stop before tool breaks",
   "key.diggusmaximus.config.playerexhaustion": "Player Exhaustion",
   "key.diggusmaximus.config.blacklistcat": "Blacklisted",
   "key.diggusmaximus.config.invertlist": "Use as Whitelist",

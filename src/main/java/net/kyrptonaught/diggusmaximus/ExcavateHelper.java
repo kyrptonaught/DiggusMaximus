@@ -4,24 +4,21 @@ import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ExcavateHelper {
     static final Set<BlockPos> cube = BlockPos.stream(-1, -1, -1, 1, 1, 1).map(BlockPos::toImmutable).collect(Collectors.toSet());
-    private static int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 2048);
+    static int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 2048);
     private static double maxDistance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 128);
 
     public static void resetMaximums() {
@@ -69,18 +66,22 @@ public class ExcavateHelper {
         return (world.getBlockState(pos).getBlock());
     }
 
-    static boolean canMine(PlayerEntity player, int mined, BlockPos startPos, BlockPos pos) {
-        return mined < maxMined && isWithinDistance(startPos, pos) && canUseTool(player);
+    static boolean canMine(PlayerEntity player, Item tool, BlockPos startPos, BlockPos pos) {
+        return isWithinDistance(startPos, pos) && checkTool(player, tool);
     }
 
     private static boolean isWithinDistance(BlockPos startPos, BlockPos pos) {
         return pos.isWithinDistance(startPos, maxDistance);
     }
 
-    private static boolean canUseTool(PlayerEntity player) {
+    private static boolean checkTool(PlayerEntity player, Item tool) {
         if (player.isCreative()) return true;
-        if (!player.inventory.getMainHandStack().isDamageable())
-            return !DiggusMaximusMod.getOptions().requiresTool;
-        return player.inventory.getMainHandStack().getDamage() != player.inventory.getMainHandStack().getMaxDamage();
+
+        if (DiggusMaximusMod.getOptions().dontBreakTool && player.getMainHandStack().getDamage() + 1 == tool.getMaxDamage())
+            return false;
+        if (player.getMainHandStack().getItem() != tool)
+            if (DiggusMaximusMod.getOptions().stopOnToolBreak || DiggusMaximusMod.getOptions().requiresTool)
+                return false;
+        return tool.isDamageable() || !DiggusMaximusMod.getOptions().requiresTool;
     }
 }

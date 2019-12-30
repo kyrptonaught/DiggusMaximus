@@ -1,6 +1,5 @@
 package net.kyrptonaught.diggusmaximus.mixin;
 
-
 import net.kyrptonaught.diggusmaximus.DiggusMaximusMod;
 import net.kyrptonaught.diggusmaximus.StartExcavatePacket;
 import net.minecraft.client.MinecraftClient;

@@ -24,6 +24,12 @@ public class ConfigOptions implements AbstractConfigFile {
     @Comment("Tool required to excavate")
     public boolean requiresTool = false;
 
+    @Comment("Stop before tool breaks")
+    public boolean dontBreakTool = true;
+
+    @Comment("Stop excavating when tool breaks")
+    public boolean stopOnToolBreak = true;
+
     @Comment("Should tool take durability")
     public boolean toolDuribility = true;
 
