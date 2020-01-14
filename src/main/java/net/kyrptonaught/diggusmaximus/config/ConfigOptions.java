@@ -31,7 +31,7 @@ public class ConfigOptions implements AbstractConfigFile {
     public boolean stopOnToolBreak = true;
 
     @Comment("Should tool take durability")
-    public boolean toolDuribility = true;
+    public boolean toolDurability = true;
 
     @Comment("Should player get exhaustion")
     public boolean playerExhaustion = true;

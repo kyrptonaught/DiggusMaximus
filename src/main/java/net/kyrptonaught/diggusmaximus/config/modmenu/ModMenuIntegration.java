@@ -49,7 +49,7 @@ public class ModMenuIntegration implements ModMenuApi {
 
             category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.autopickup", options.autoPickup).setSaveConsumer(val -> options.autoPickup = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.requirestool", options.requiresTool).setSaveConsumer(val -> options.requiresTool = val).setDefaultValue(false).build());
-            category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.toolduribility", options.toolDuribility).setSaveConsumer(val -> options.toolDuribility = val).setDefaultValue(true).build());
+            category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.toolduribility", options.toolDurability).setSaveConsumer(val -> options.toolDurability = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.stopontoolbreak", options.stopOnToolBreak).setSaveConsumer(val -> options.stopOnToolBreak = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.dontbreaktool", options.dontBreakTool).setSaveConsumer(val -> options.dontBreakTool = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startBooleanToggle("key.diggusmaximus.config.playerexhaustion", options.playerExhaustion).setSaveConsumer(val -> options.playerExhaustion = val).setDefaultValue(true).build());

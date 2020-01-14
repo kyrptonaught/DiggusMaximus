@@ -10,10 +10,15 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
+
 public class DiggusMaximusMod implements ModInitializer {
     public static final String MOD_ID = "diggusmaximus";
-
     public static ConfigManager configManager = new ConfigManager();
+
+    public static HashSet<UUID> ExcavatingPlayers = new HashSet<>();
 
     @Override
     public void onInitialize() {

@@ -35,11 +35,11 @@ class Excavate {
     void startExcavate() {
         forceExcavateAt(startPos);
         if (startID == null) return;
+        DiggusMaximusMod.ExcavatingPlayers.add(player.getUuid());
         while (!points.isEmpty()) {
             spread(points.remove());
         }
-        if (DiggusMaximusMod.getOptions().playerExhaustion)
-            player.addExhaustion(0.005F * mined);
+        DiggusMaximusMod.ExcavatingPlayers.remove(player.getUuid());
     }
 
     private void spread(BlockPos pos) {
