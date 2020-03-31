@@ -1,6 +1,9 @@
 package net.kyrptonaught.diggusmaximus.config;
 
 import blue.endless.jankson.Comment;
+import net.kyrptonaught.kyrptconfig.config.AbstractConfigFile;
+
+import java.util.HashSet;
 
 public class ConfigOptions implements AbstractConfigFile {
     @Comment("Mod enabled or disabled")
@@ -35,4 +38,10 @@ public class ConfigOptions implements AbstractConfigFile {
 
     @Comment("Should player get exhaustion")
     public boolean playerExhaustion = true;
+
+    @Comment("Multiply exhaustion when excavating")
+    public float exhaustionMultiplier = 1.0f;
+
+    @Comment("Other items to be considered tools: \"minecraft:stick\"")
+    public HashSet<String> tools = new HashSet<>();
 }

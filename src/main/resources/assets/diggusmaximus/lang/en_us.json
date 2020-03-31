@@ -13,6 +13,8 @@
   "key.diggusmaximus.config.stopontoolbreak": "Stop on tool breakage",
   "key.diggusmaximus.config.dontbreaktool": "Stop before tool breaks",
   "key.diggusmaximus.config.playerexhaustion": "Player Exhaustion",
+  "key.diggusmaximus.config.exhaustionmultiplier" : "Exhaustion Multiplier",
+  "key.diggusmaximus.config.toollist": "List of other tools",
   "key.diggusmaximus.config.blacklistcat": "Blacklisted",
   "key.diggusmaximus.config.invertlist": "Use as Whitelist",
   "key.diggusmaximus.config.blacklist": "Blacklisted Blocks",

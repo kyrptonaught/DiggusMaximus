@@ -1,6 +1,7 @@
 package net.kyrptonaught.diggusmaximus.config;
 
 import blue.endless.jankson.Comment;
+import net.kyrptonaught.kyrptconfig.config.AbstractConfigFile;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;

@@ -2,12 +2,11 @@ package net.kyrptonaught.diggusmaximus;
 
 import com.google.common.collect.Lists;
 import net.fabricmc.fabric.api.tag.TagRegistry;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.TagContainer;
 import net.minecraft.util.Identifier;
@@ -16,11 +15,11 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class ExcavateHelper {
-    static final Set<BlockPos> cube = BlockPos.stream(-1, -1, -1, 1, 1, 1).map(BlockPos::toImmutable).collect(Collectors.toSet());
     static int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 2048);
     private static double maxDistance = Math.min(DiggusMaximusMod.getOptions().maxMineDistance + 1, 128);
 
@@ -41,7 +40,7 @@ public class ExcavateHelper {
     }
 
     static boolean isTheSameBlock(Identifier startID, Identifier newID, World world) {
-        if (DiggusMaximusMod.configManager.getGrouping().tagGrouping) {
+        if (DiggusMaximusMod.getGrouping().tagGrouping) {
             Block newBlock = Registry.BLOCK.get(newID);
             for (Identifier tagID : getTagsFor(world.getTagManager().blocks(), Registry.BLOCK.get(startID))) {
                 if (TagRegistry.block(tagID).contains(newBlock)) {
@@ -50,13 +49,14 @@ public class ExcavateHelper {
                 }
             }
         }
-        if (DiggusMaximusMod.configManager.getGrouping().customGrouping) {
+        if (DiggusMaximusMod.getGrouping().customGrouping) {
             newID = DiggusMaximusMod.getIDFromConfigLookup(newID);
             startID = DiggusMaximusMod.getIDFromConfigLookup(startID);
         }
         return startID.equals(newID);
     }
-// copied from: net.minecraft.tag.TagContainer.getTagsFor
+
+    // copied from: net.minecraft.tag.TagContainer:getTagsFor
     static Collection<Identifier> getTagsFor(TagContainer<Block> container, Block object) {
         List<Identifier> list = Lists.newArrayList();
         for (Map.Entry<Identifier, Tag<Block>> identifierTagEntry : container.getEntries().entrySet()) {
@@ -68,7 +68,7 @@ public class ExcavateHelper {
     }
 
     static boolean configAllowsMining(String blockID) {
-        return DiggusMaximusMod.configManager.getBlackList().isWhitelist == DiggusMaximusMod.configManager.getBlackList().blacklist.contains(blockID);
+        return DiggusMaximusMod.getBlackList().isWhitelist == DiggusMaximusMod.getBlackList().blacklistedBlocks.contains(blockID);
     }
 
     static boolean isValidPos(BlockPos pos) {
@@ -89,12 +89,16 @@ public class ExcavateHelper {
 
     private static boolean checkTool(PlayerEntity player, Item tool) {
         if (player.isCreative()) return true;
-
-        if (DiggusMaximusMod.getOptions().dontBreakTool && player.getMainHandStack().getDamage() + 1 == tool.getMaxDamage())
+        ItemStack heldItem = player.getMainHandStack();
+        if (DiggusMaximusMod.getOptions().dontBreakTool && heldItem.getDamage() + 1 == tool.getMaxDamage())
             return false;
-        if (player.getMainHandStack().getItem() != tool)
+        if (heldItem.getItem() != tool)
             if (DiggusMaximusMod.getOptions().stopOnToolBreak || DiggusMaximusMod.getOptions().requiresTool)
                 return false;
-        return tool.isDamageable() || !DiggusMaximusMod.getOptions().requiresTool;
+        return isTool(heldItem.getItem()) || !DiggusMaximusMod.getOptions().requiresTool;
+    }
+
+    private static boolean isTool(Item isTool) {
+        return isTool.isDamageable() || DiggusMaximusMod.getOptions().tools.contains(Registry.ITEM.getId(isTool).toString());
     }
 }

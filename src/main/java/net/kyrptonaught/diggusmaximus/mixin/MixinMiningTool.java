@@ -1,5 +1,6 @@
 package net.kyrptonaught.diggusmaximus.mixin;
 
+import net.kyrptonaught.diggusmaximus.DiggingPlayerEntity;
 import net.kyrptonaught.diggusmaximus.DiggusMaximusMod;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -16,8 +17,8 @@ import java.util.function.Consumer;
 public class MixinMiningTool {
 
     @Redirect(method = "postMine", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V"))
-    private void DIGGUS$CANCELEXHAUSTION(ItemStack itemStack, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
-        if (!(entity instanceof PlayerEntity) || !DiggusMaximusMod.ExcavatingPlayers.contains(entity.getUuid()) || DiggusMaximusMod.getOptions().toolDurability)
+    private void DIGGUS$CANCELDURABILITY(ItemStack itemStack, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
+        if (!(entity instanceof PlayerEntity) || !((DiggingPlayerEntity) entity).isExcavating() || DiggusMaximusMod.getOptions().toolDurability)
             itemStack.damage(1, entity, (e) -> e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
     }
 }

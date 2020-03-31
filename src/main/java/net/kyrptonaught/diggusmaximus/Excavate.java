@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -13,13 +14,13 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 class Excavate {
-    private BlockPos startPos;
-    private PlayerEntity player;
+    private final BlockPos startPos;
+    private final PlayerEntity player;
     private Identifier startID;
-    private Item startTool;
+    private final Item startTool;
     private int mined = 0;
-    private World world;
-    private Deque<BlockPos> points = new ArrayDeque<>();
+    private final World world;
+    private final Deque<BlockPos> points = new ArrayDeque<>();
 
     Excavate(BlockPos pos, PlayerEntity player) {
         this.startPos = pos;
@@ -30,31 +31,24 @@ class Excavate {
         if (ExcavateHelper.configAllowsMining(id.toString()))
             this.startID = id;
         this.startTool = player.getMainHandStack().getItem();
+        ExcavateTypes.facing = ((BlockHitResult) player.rayTrace(10, 0, false)).getSide();
     }
 
     void startExcavate() {
         forceExcavateAt(startPos);
         if (startID == null) return;
-        DiggusMaximusMod.ExcavatingPlayers.add(player.getUuid());
+        ((DiggingPlayerEntity) player).setExcavating(true);
         while (!points.isEmpty()) {
             spread(points.remove());
         }
-        DiggusMaximusMod.ExcavatingPlayers.remove(player.getUuid());
+        ((DiggingPlayerEntity) player).setExcavating(false);
     }
 
+
     private void spread(BlockPos pos) {
-        if (DiggusMaximusMod.getOptions().mineDiag) {
-            for (BlockPos dirPos : ExcavateHelper.cube) {
-                if (ExcavateHelper.isValidPos(dirPos))
-                    excavateAt(pos.add(dirPos));
-            }
-        } else {
-            excavateAt(pos.north());
-            excavateAt(pos.east());
-            excavateAt(pos.south());
-            excavateAt(pos.west());
-            excavateAt(pos.up());
-            excavateAt(pos.down());
+        for (BlockPos dirPos : ExcavateTypes.standard()) {
+            if (ExcavateHelper.isValidPos(dirPos))
+                excavateAt(pos.add(dirPos));
         }
     }
 

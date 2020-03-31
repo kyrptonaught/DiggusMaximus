@@ -3,31 +3,40 @@ package net.kyrptonaught.diggusmaximus;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
-import net.kyrptonaught.diggusmaximus.config.ConfigManager;
+import net.kyrptonaught.diggusmaximus.config.Blacklist;
+import net.kyrptonaught.diggusmaximus.config.BlockCategory;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
+import net.kyrptonaught.kyrptconfig.config.ConfigManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.UUID;
-
 public class DiggusMaximusMod implements ModInitializer {
     public static final String MOD_ID = "diggusmaximus";
-    public static ConfigManager configManager = new ConfigManager();
-
-    public static HashSet<UUID> ExcavatingPlayers = new HashSet<>();
+    public static ConfigManager configManager = new ConfigManager.MultiConfigManager(MOD_ID);
 
     @Override
     public void onInitialize() {
+        configManager.registerFile("config.json5", new ConfigOptions());
+        configManager.registerFile("blacklist.json5", new Blacklist());
+        configManager.registerFile("grouping.json5", new BlockCategory());
         configManager.loadAll();
-        configManager.getBlackList().generateHash();
-        configManager.getGrouping().generateLookup();
+        getGrouping().generateLookup();
         StartExcavatePacket.registerReceivePacket();
     }
 
+    public static ConfigOptions getOptions() {
+        return (ConfigOptions) configManager.getConfig("config.json5");
+    }
+
+    public static Blacklist getBlackList() {
+        return (Blacklist) configManager.getConfig("blacklist.json5");
+    }
+
+    public static BlockCategory getGrouping() {
+        return (BlockCategory) configManager.getConfig("grouping.json5");
+    }
 
     public static InputUtil.KeyCode keycode;
 
@@ -40,11 +49,7 @@ public class DiggusMaximusMod implements ModInitializer {
         return GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getKeyCode()) == 1;
     }
 
-    public static ConfigOptions getOptions() {
-        return configManager.getOptions();
-    }
-
     public static Identifier getIDFromConfigLookup(Identifier blockID) {
-        return configManager.getGrouping().lookup.getOrDefault(blockID, blockID);
+        return getGrouping().lookup.getOrDefault(blockID, blockID);
     }
 }
