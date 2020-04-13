@@ -90,18 +90,20 @@ public class ExcavateTypes {
         return cube;
     }
 
-    public static List<BlockPos> standard() {
-        List<BlockPos> cube = new ArrayList<>();
-        cube.add(new BlockPos(0, 1, 0));
-        cube.add(new BlockPos(0, 0, 1));
-        cube.add(new BlockPos(0, -1, 0));
-        cube.add(new BlockPos(1, 0, 0));
-        cube.add(new BlockPos(0, 0, -1));
-        cube.add(new BlockPos(-1, 0, 0));
-        return cube;
+    public final static List<BlockPos> standard = new ArrayList<>();
+
+    static {
+        standard.add(new BlockPos(0, 1, 0));
+        standard.add(new BlockPos(0, 0, 1));
+        standard.add(new BlockPos(0, -1, 0));
+        standard.add(new BlockPos(1, 0, 0));
+        standard.add(new BlockPos(0, 0, -1));
+        standard.add(new BlockPos(-1, 0, 0));
     }
 
-    public static List<BlockPos> standardDiag() {
-        return BlockPos.stream(-1, -1, -1, 1, 1, 1).map(BlockPos::toImmutable).collect(Collectors.toList());
+    public final static List<BlockPos> standardDiag = new ArrayList<>();
+
+    static {
+        standardDiag.addAll(BlockPos.stream(-1, -1, -1, 1, 1, 1).map(BlockPos::toImmutable).collect(Collectors.toList()));
     }
 }

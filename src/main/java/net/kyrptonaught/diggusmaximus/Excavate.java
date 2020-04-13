@@ -46,7 +46,7 @@ class Excavate {
 
 
     private void spread(BlockPos pos) {
-        for (BlockPos dirPos : DiggusMaximusMod.getOptions().mineDiag ? ExcavateTypes.standardDiag() : ExcavateTypes.standard()) {
+        for (BlockPos dirPos : DiggusMaximusMod.getOptions().mineDiag ? ExcavateTypes.standardDiag : ExcavateTypes.standard) {
             if (ExcavateHelper.isValidPos(dirPos))
                 excavateAt(pos.add(dirPos));
         }
