@@ -3,12 +3,12 @@
   "package": "net.kyrptonaught.diggusmaximus.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinBlockBreak",
-    "MixinMiningTool",
-    "MixinPlayerEntity"
+    "MixinMiningToolItem",
+    "MixinPlayerEntity",
+    "MixinBlock"
   ],
   "client": [
-    "MixinBlockBreak"
+    "MixinClientPlayerInteractionManager"
   ],
   "injectors": {
     "defaultRequire": 1

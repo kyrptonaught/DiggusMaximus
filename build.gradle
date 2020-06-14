@@ -22,8 +22,8 @@ dependencies {
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation 'net.kyrptonaught:kyrptconfig:1.0.0'
-	include 'net.kyrptonaught:kyrptconfig:1.0.0'
+	modImplementation 'net.kyrptonaught:kyrptconfig:1.0.1'
+	include 'net.kyrptonaught:kyrptconfig:1.0.1'
 
 }
 

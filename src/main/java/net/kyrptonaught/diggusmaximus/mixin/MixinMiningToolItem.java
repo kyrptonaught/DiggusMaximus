@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import java.util.function.Consumer;
 
 @Mixin(MiningToolItem.class)
-public class MixinMiningTool {
+public class MixinMiningToolItem {
 
     @Redirect(method = "postMine", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V"))
     private void DIGGUS$CANCELDURABILITY(ItemStack itemStack, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {

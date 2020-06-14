@@ -42,6 +42,6 @@ public class ConfigOptions implements AbstractConfigFile {
     @Comment("Multiply exhaustion when excavating")
     public float exhaustionMultiplier = 1.0f;
 
-    @Comment("Other items to be considered tools: \"minecraft:stick\"")
+    @Comment("Other items to be considered tools ie: \"minecraft:stick\"")
     public HashSet<String> tools = new HashSet<>();
 }

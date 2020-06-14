@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerInteractionManager.class)
-public abstract class MixinBlockBreak {
+public abstract class MixinClientPlayerInteractionManager {
     @Shadow
     private GameMode gameMode;
 
