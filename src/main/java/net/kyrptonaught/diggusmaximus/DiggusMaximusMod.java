@@ -38,15 +38,15 @@ public class DiggusMaximusMod implements ModInitializer {
         return (BlockCategory) configManager.getConfig("grouping.json5");
     }
 
-    public static InputUtil.KeyCode keycode;
+    public static InputUtil.Key keycode;
 
     @Environment(EnvType.CLIENT)
     public static boolean isKeybindPressed() {
         if (keycode == null)
-            keycode = InputUtil.fromName(getOptions().keybinding);
+            keycode = InputUtil.fromTranslationKey(getOptions().keybinding);
         if (keycode.getCategory() == InputUtil.Type.MOUSE)
-            return GLFW.glfwGetMouseButton(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getKeyCode()) == 1;
-        return GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getKeyCode()) == 1;
+            return GLFW.glfwGetMouseButton(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getCode()) == 1;
+        return GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getCode()) == 1;
     }
 
     public static Identifier getIDFromConfigLookup(Identifier blockID) {
