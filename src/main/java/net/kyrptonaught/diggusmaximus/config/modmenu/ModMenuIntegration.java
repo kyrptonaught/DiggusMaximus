@@ -34,7 +34,7 @@ public class ModMenuIntegration implements ModMenuApi {
             ConfigOptions options = DiggusMaximusMod.getOptions();
             ConfigBuilder builder = ConfigBuilder.create().setParentScreen(screen).setTitle(new TranslatableText("Diggus Maximus Config"));
             builder.setSavingRunnable(() -> {
-                DiggusMaximusMod.configManager.saveAll();
+                DiggusMaximusMod.configManager.save();
                 DiggusMaximusMod.keycode = null;
                 DiggusMaximusMod.getGrouping().generateLookup();
                 ExcavateHelper.resetMaximums();
