@@ -29,7 +29,7 @@ public abstract class MixinClientPlayerInteractionManager {
 
     @Inject(method = "sendPlayerAction", at = @At(value = "HEAD"), cancellable = true)
     private void DIGGUS$BLOCKBREAK(PlayerActionC2SPacket.Action action, BlockPos blockPos, Direction direction, CallbackInfo ci) {
-        if (DiggusMaximusMod.getOptions().enabled && DiggusMaximusMod.isKeybindPressed()) {
+        if (DiggusMaximusMod.getOptions().enabled && (DiggusMaximusMod.getOptions().hotkeyEnables == DiggusMaximusMod.isKeybindPressed())) {
             PlayerActionC2SPacket.Action requiredAction = this.gameMode == GameMode.CREATIVE ? PlayerActionC2SPacket.Action.START_DESTROY_BLOCK : PlayerActionC2SPacket.Action.STOP_DESTROY_BLOCK;
             if (action.equals(requiredAction) || this.client.world.getBlockState(blockPos).calcBlockBreakingDelta(this.client.player, this.client.player.world, blockPos) >= 1.0f) {
                 StartExcavatePacket.sendExcavatePacket(blockPos);

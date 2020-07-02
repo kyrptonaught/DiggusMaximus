@@ -44,6 +44,7 @@ public class ModMenuIntegration implements ModMenuApi {
             ConfigCategory category = builder.getOrCreateCategory(new TranslatableText("key.diggusmaximus.config.category"));
             category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.enabled"), options.enabled).setSaveConsumer(val -> options.enabled = val).setDefaultValue(true).build());
 
+            category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.hotkeyenables"), options.hotkeyEnables).setSaveConsumer(val -> options.hotkeyEnables = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startKeyCodeField(new TranslatableText("key.diggusmaximus.config.hotkey"), InputUtil.fromTranslationKey(options.keybinding)).setSaveConsumer(key -> options.keybinding = key.getTranslationKey()).build());
             category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.minediag"), options.mineDiag).setSaveConsumer(val -> options.mineDiag = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startIntField(new TranslatableText("key.diggusmaximus.config.maxmine"), options.maxMinedBlocks).setSaveConsumer(val -> options.maxMinedBlocks = val).setDefaultValue(40).setMin(1).setMax(2048).build());

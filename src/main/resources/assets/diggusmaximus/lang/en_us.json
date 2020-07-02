@@ -3,6 +3,7 @@
   "key.diggusmaximus.excavate": "Excavate",
   "key.diggusmaximus.config.category": "Options",
   "key.diggusmaximus.config.enabled": "Enabled",
+  "key.diggusmaximus.config.hotkeyenables": "Hold keybind to excavate (false: hold to disable excavate)",
   "key.diggusmaximus.config.hotkey": "Keybind",
   "key.diggusmaximus.config.minediag": "Mine blocks diagonally",
   "key.diggusmaximus.config.maxmine": "Max mined blocks",
