@@ -12,7 +12,7 @@
   "key.diggusmaximus.config.toolduribility": "工具耐久度",
   "key.diggusmaximus.config.stopontoolbreak": "在工具损坏§f时§r停止挖掘",
   "key.diggusmaximus.config.dontbreaktool": "在工具损坏§f前§r停止挖掘",
-  "key.diggusmaximus.config.playerexhaustion": "消耗玩家饥饿等级 (饱食度与饱和度)",
+  "key.diggusmaximus.config.playerexhaustion": "增加玩家饥饿等级 (加速消耗饱食度与饱和度)",
   "key.diggusmaximus.config.exhaustionmultiplier": "饥饿等级倍率",
   "key.diggusmaximus.config.toollist": "其它工具列表",
   "key.diggusmaximus.config.blacklistcat": "黑名单",
