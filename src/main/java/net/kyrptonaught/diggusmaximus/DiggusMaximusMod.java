@@ -7,12 +7,17 @@ import net.kyrptonaught.diggusmaximus.config.Blacklist;
 import net.kyrptonaught.diggusmaximus.config.BlockCategory;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
 import net.kyrptonaught.kyrptconfig.config.ConfigManager;
+import net.kyrptonaught.kyrptconfig.config.NonConflicting.AddNonConflictingKeyBind;
+import net.kyrptonaught.kyrptconfig.config.NonConflicting.NonConflictingKeyBindData;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
-public class DiggusMaximusMod implements ModInitializer {
+import java.util.List;
+
+public class DiggusMaximusMod implements ModInitializer, AddNonConflictingKeyBind {
     public static final String MOD_ID = "diggusmaximus";
     public static ConfigManager configManager = new ConfigManager.MultiConfigManager(MOD_ID);
 
@@ -51,5 +56,16 @@ public class DiggusMaximusMod implements ModInitializer {
 
     public static Identifier getIDFromConfigLookup(Identifier blockID) {
         return getGrouping().lookup.getOrDefault(blockID, blockID);
+    }
+
+    @Override
+    public void addKeyBinding(List<NonConflictingKeyBindData> list) {
+        InputUtil.Key key = InputUtil.fromTranslationKey(getOptions().keybinding);
+        NonConflictingKeyBindData bindData = new NonConflictingKeyBindData("key.diggusmaximus.excavate", "key.categories.diggusmaximus", key.getCategory(), key.getCode(), setKey -> {
+            getOptions().keybinding = setKey.getTranslationKey();
+            configManager.save();
+            keycode = null;
+        });
+        list.add(bindData);
     }
 }
