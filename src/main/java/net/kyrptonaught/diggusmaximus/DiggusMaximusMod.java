@@ -11,7 +11,6 @@ import net.kyrptonaught.kyrptconfig.config.NonConflicting.AddNonConflictingKeyBi
 import net.kyrptonaught.kyrptconfig.config.NonConflicting.NonConflictingKeyBindData;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,19 +46,19 @@ public class DiggusMaximusMod implements ModInitializer, AddNonConflictingKeyBin
     }
 
     public static InputUtil.Key keycode;
-    private static boolean parsed;
+    private static boolean parse;
 
     @Environment(EnvType.CLIENT)
     public static boolean isKeybindPressed() {
-        if (parsed) {
+        if (parse) {
             if (getOptions().keybinding.isEmpty())
                 keycode = InputUtil.UNKNOWN_KEY;
-            try {
+            else try {
                 keycode = InputUtil.fromTranslationKey(getOptions().keybinding);
             } catch (IllegalArgumentException e) {
                 LOGGER.error(e.getMessage()); // "Unknown key name: ..."
             }
-            parsed = false;
+            parse = false;
         }
         if (keycode == null) // Invalid key
             return false;
