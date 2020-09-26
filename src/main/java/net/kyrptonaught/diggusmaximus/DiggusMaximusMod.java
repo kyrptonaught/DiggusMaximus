@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DiggusMaximusMod implements ModInitializer, AddNonConflictingKeyBind {
     public static final String MOD_ID = "diggusmaximus";
@@ -53,11 +54,8 @@ public class DiggusMaximusMod implements ModInitializer, AddNonConflictingKeyBin
         if (parse) {
             if (getOptions().keybinding.isEmpty())
                 keycode = InputUtil.UNKNOWN_KEY;
-            else try {
-                keycode = InputUtil.fromTranslationKey(getOptions().keybinding);
-            } catch (IllegalArgumentException e) {
-                LOGGER.error(e.getMessage()); // "Unknown key name: ..."
-            }
+            else
+                keycode = getKeybinding().orElse(null);
             parse = false;
         }
         if (keycode == null) // Invalid key
@@ -75,12 +73,22 @@ public class DiggusMaximusMod implements ModInitializer, AddNonConflictingKeyBin
 
     @Override
     public void addKeyBinding(List<NonConflictingKeyBindData> list) {
-        InputUtil.Key key = InputUtil.fromTranslationKey(getOptions().keybinding);
-        NonConflictingKeyBindData bindData = new NonConflictingKeyBindData("key.diggusmaximus.excavate", "key.categories.diggusmaximus", key.getCategory(), key.getCode(), setKey -> {
-            getOptions().keybinding = setKey.getTranslationKey();
-            configManager.save();
-            keycode = null;
+        getKeybinding().ifPresent(key -> {
+            NonConflictingKeyBindData bindData = new NonConflictingKeyBindData("key.diggusmaximus.excavate", "key.categories.diggusmaximus", key.getCategory(), key.getCode(), setKey -> {
+                getOptions().keybinding = setKey.getTranslationKey();
+                configManager.save();
+                keycode = null;
+            });
+            list.add(bindData);
         });
-        list.add(bindData);
+    }
+
+    public static Optional<InputUtil.Key> getKeybinding() {
+        try {
+            return Optional.of(InputUtil.fromTranslationKey(getOptions().keybinding));
+        } catch (IllegalArgumentException e) {
+            LOGGER.error(e.getMessage()); // "Unknown key name: ..."
+            return Optional.empty();
+        }
     }
 }
