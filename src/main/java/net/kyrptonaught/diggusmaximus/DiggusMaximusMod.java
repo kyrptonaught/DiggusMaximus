@@ -46,7 +46,7 @@ public class DiggusMaximusMod implements ModInitializer, AddNonConflictingKeyBin
     }
 
     public static InputUtil.Key keycode;
-    private static boolean parse;
+    private static boolean parse = true;
 
     @Environment(EnvType.CLIENT)
     public static boolean isKeybindPressed() {
