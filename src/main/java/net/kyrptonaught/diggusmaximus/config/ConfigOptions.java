@@ -12,6 +12,9 @@ public class ConfigOptions implements AbstractConfigFile {
     @Comment("Activation key")
     public String keybinding = "key.keyboard.grave.accent";
 
+    @Comment("Inverts the keybinding activation")
+    public boolean invertActivation = false;
+
     @Comment("Should mine diagonally")
     public boolean mineDiag = true;
 

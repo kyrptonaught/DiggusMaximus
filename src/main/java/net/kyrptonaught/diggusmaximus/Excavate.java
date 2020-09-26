@@ -31,7 +31,7 @@ class Excavate {
         if (ExcavateHelper.configAllowsMining(id.toString()))
             this.startID = id;
         this.startTool = player.getMainHandStack().getItem();
-        ExcavateTypes.facing = ((BlockHitResult) player.rayTrace(10, 0, false)).getSide();
+        ExcavateTypes.facing = ((BlockHitResult) player.raycast(10, 0, false)).getSide();
     }
 
     void startExcavate() {
