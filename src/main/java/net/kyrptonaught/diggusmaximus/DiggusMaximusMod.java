@@ -13,6 +13,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 public class DiggusMaximusMod implements ModInitializer, AddNonConflictingKeyBind {
     public static final String MOD_ID = "diggusmaximus";
     public static ConfigManager configManager = new ConfigManager.MultiConfigManager(MOD_ID);
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public void onInitialize() {
@@ -44,11 +47,24 @@ public class DiggusMaximusMod implements ModInitializer, AddNonConflictingKeyBin
     }
 
     public static InputUtil.Key keycode;
+    private static boolean parsed;
 
     @Environment(EnvType.CLIENT)
     public static boolean isKeybindPressed() {
-        if (keycode == null)
-            keycode = InputUtil.fromTranslationKey(getOptions().keybinding);
+        if (parsed) {
+            if (getOptions().keybinding.isEmpty())
+                keycode = InputUtil.UNKNOWN_KEY;
+            try {
+                keycode = InputUtil.fromTranslationKey(getOptions().keybinding);
+            } catch (IllegalArgumentException e) {
+                LOGGER.error(e.getMessage()); // "Unknown key name: ..."
+            }
+            parsed = false;
+        }
+        if (keycode == null) // Invalid key
+            return false;
+        if (keycode == InputUtil.UNKNOWN_KEY)
+            return true; // Empty or explicitly "key.keyboard.unknown"
         if (keycode.getCategory() == InputUtil.Type.MOUSE)
             return GLFW.glfwGetMouseButton(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getCode()) == 1;
         return GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), keycode.getCode()) == 1;
