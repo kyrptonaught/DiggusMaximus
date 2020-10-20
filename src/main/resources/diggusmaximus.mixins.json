@@ -3,9 +3,9 @@
   "package": "net.kyrptonaught.diggusmaximus.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinMiningToolItem",
-    "MixinPlayerEntity",
-    "MixinBlock"
+    "MixinBlock",
+    "MixinCancelDurability",
+    "MixinPlayerEntity"
   ],
   "client": [
     "MixinClientPlayerInteractionManager"

@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
-import net.minecraft.tag.TagContainer;
+import net.minecraft.tag.TagGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -29,7 +29,7 @@ public class ExcavateHelper {
     }
 
     static void pickupDrops(World world, BlockPos pos, PlayerEntity player) {
-        List<ItemEntity> drops = world.getEntities(ItemEntity.class, new Box(pos), null);
+        List<ItemEntity> drops = world.getEntitiesByClass(ItemEntity.class, new Box(pos), null);
         drops.forEach(item -> {
             ItemStack stack = item.getStack();
             player.inventory.insertStack(stack);
@@ -42,7 +42,7 @@ public class ExcavateHelper {
     static boolean isTheSameBlock(Identifier startID, Identifier newID, World world) {
         if (DiggusMaximusMod.getGrouping().tagGrouping) {
             Block newBlock = Registry.BLOCK.get(newID);
-            for (Identifier tagID : getTagsFor(world.getTagManager().blocks(), Registry.BLOCK.get(startID))) {
+            for (Identifier tagID : getTagsFor(world.getTagManager().getBlocks(), Registry.BLOCK.get(startID))) {
                 if (TagRegistry.block(tagID).contains(newBlock)) {
                     newID = startID;
                     break;
@@ -57,9 +57,9 @@ public class ExcavateHelper {
     }
 
     // copied from: net.minecraft.tag.TagContainer:getTagsFor
-    static Collection<Identifier> getTagsFor(TagContainer<Block> container, Block object) {
+    static Collection<Identifier> getTagsFor(TagGroup<Block> container, Block object) {
         List<Identifier> list = Lists.newArrayList();
-        for (Map.Entry<Identifier, Tag<Block>> identifierTagEntry : container.getEntries().entrySet()) {
+        for (Map.Entry<Identifier, Tag<Block>> identifierTagEntry : container.getTags().entrySet()) {
             if (identifierTagEntry.getValue().contains(object)) {
                 list.add(identifierTagEntry.getKey());
             }
