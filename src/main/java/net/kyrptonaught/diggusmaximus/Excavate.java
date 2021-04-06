@@ -1,12 +1,12 @@
 package net.kyrptonaught.diggusmaximus;
 
-import net.minecraft.block.Block;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
@@ -22,19 +22,22 @@ class Excavate {
     private final World world;
     private final Deque<BlockPos> points = new ArrayDeque<>();
 
-    Excavate(BlockPos pos, PlayerEntity player) {
+    private final Direction facing;
+    private int shapeSelection = -1;
+
+    Excavate(BlockPos pos, Identifier blockID, PlayerEntity player, Direction facing) {
         this.startPos = pos;
         this.player = player;
         this.world = player.getEntityWorld();
-        Block block = world.getBlockState(pos).getBlock();
-        Identifier id = Registry.BLOCK.getId(block);
-        if (ExcavateHelper.configAllowsMining(id.toString()))
-            this.startID = id;
+        if (ExcavateHelper.configAllowsMining(blockID.toString()))
+            this.startID = blockID;
+
         this.startTool = player.getMainHandStack().getItem();
-        ExcavateTypes.facing = ((BlockHitResult) player.raycast(10, 0, false)).getSide();
+        this.facing = facing;
     }
 
-    void startExcavate() {
+    void startExcavate(int shapeSelection) {
+        this.shapeSelection = shapeSelection;
         forceExcavateAt(startPos);
         if (startID == null) return;
         ((DiggingPlayerEntity) player).setExcavating(true);
@@ -44,9 +47,8 @@ class Excavate {
         ((DiggingPlayerEntity) player).setExcavating(false);
     }
 
-
     private void spread(BlockPos pos) {
-        for (BlockPos dirPos : DiggusMaximusMod.getOptions().mineDiag ? ExcavateTypes.standardDiag : ExcavateTypes.standard) {
+        for (BlockPos dirPos : ExcavateTypes.getSpreadType(shapeSelection, facing, startPos, pos)) {
             if (ExcavateHelper.isValidPos(dirPos))
                 excavateAt(pos.add(dirPos));
         }
@@ -55,7 +57,7 @@ class Excavate {
     private void excavateAt(BlockPos pos) {
         if (mined >= ExcavateHelper.maxMined) return;
         Identifier block = Registry.BLOCK.getId(ExcavateHelper.getBlockAt(world, pos));
-        if (ExcavateHelper.isTheSameBlock(startID, block, world) && ExcavateHelper.canMine(player, startTool, startPos, pos) && ((ServerPlayerEntity) player).interactionManager.tryBreakBlock(pos)) {
+        if (ExcavateHelper.isTheSameBlock(startID, block, world, shapeSelection) && ExcavateHelper.canMine(player, startTool, startPos, pos) && isExcavatingAllowed(pos)) {
             points.add(pos);
             mined++;
             if (DiggusMaximusMod.getOptions().autoPickup)
@@ -63,12 +65,14 @@ class Excavate {
         }
     }
 
+    private boolean isExcavatingAllowed(BlockPos pos) {
+        return PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, pos, world.getBlockState(pos), world.getBlockEntity(pos)) && ((ServerPlayerEntity) player).interactionManager.tryBreakBlock(pos);
+    }
+
     private void forceExcavateAt(BlockPos pos) {
-        if (((ServerPlayerEntity) player).interactionManager.tryBreakBlock(pos)) {
-            points.add(pos);
-            mined++;
-            if (DiggusMaximusMod.getOptions().autoPickup)
-                ExcavateHelper.pickupDrops(world, pos, player);
-        }
+        points.add(pos);
+        mined++;
+        if (DiggusMaximusMod.getOptions().autoPickup)
+            ExcavateHelper.pickupDrops(world, pos, player);
     }
 }
