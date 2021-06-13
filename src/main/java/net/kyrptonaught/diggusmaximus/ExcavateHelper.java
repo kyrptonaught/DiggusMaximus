@@ -7,6 +7,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.TagGroup;
 import net.minecraft.util.Identifier;
@@ -32,9 +33,9 @@ public class ExcavateHelper {
         List<ItemEntity> drops = world.getEntitiesByClass(ItemEntity.class, new Box(pos), null);
         drops.forEach(item -> {
             ItemStack stack = item.getStack();
-            player.inventory.insertStack(stack);
+            player.getInventory().insertStack(stack);
             if (stack.getCount() <= 0)
-                item.remove();
+                item.discard();
         });
 
     }
@@ -44,7 +45,7 @@ public class ExcavateHelper {
             return true;
         if (DiggusMaximusMod.getGrouping().tagGrouping) {
             Block newBlock = Registry.BLOCK.get(newID);
-            for (Identifier tagID : getTagsFor(world.getTagManager().getBlocks(), Registry.BLOCK.get(startID))) {
+            for (Identifier tagID : getTagsFor(BlockTags.getTagGroup(), Registry.BLOCK.get(startID))) {
                 if (TagRegistry.block(tagID).contains(newBlock)) {
                     newID = startID;
                     break;
@@ -58,7 +59,7 @@ public class ExcavateHelper {
         return startID.equals(newID);
     }
 
-    // copied from: net.minecraft.tag.TagContainer:getTagsFor
+     //copied from: net.minecraft.tag.TagContainer:getTagsFor
     static Collection<Identifier> getTagsFor(TagGroup<Block> container, Block object) {
         List<Identifier> list = Lists.newArrayList();
         for (Map.Entry<Identifier, Tag<Block>> identifierTagEntry : container.getTags().entrySet()) {

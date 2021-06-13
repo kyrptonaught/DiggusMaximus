@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "net.kyrptonaught.diggusmaximus.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_16",
   "mixins": [
     "MixinBlock",
     "MixinCancelDurability",

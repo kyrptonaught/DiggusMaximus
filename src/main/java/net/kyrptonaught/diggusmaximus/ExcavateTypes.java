@@ -26,7 +26,7 @@ public class ExcavateTypes {
         if (shapeSelection == -1)
             return DiggusMaximusMod.getOptions().mineDiag ? ExcavateTypes.standardDiag : ExcavateTypes.standard;
 
-        switch (ExcavateTypes.shape.values()[shapeSelection]) {
+        switch (shape.values()[shapeSelection]) {
             case Hole:
                 return ExcavateTypes.hole(facing);
             case HorizontalLayer:

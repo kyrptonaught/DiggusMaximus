@@ -1,6 +1,7 @@
 package net.kyrptonaught.diggusmaximus.config.modmenu;
 
-import io.github.prospector.modmenu.api.ModMenuApi;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
@@ -10,11 +11,9 @@ import net.fabricmc.api.Environment;
 import net.kyrptonaught.diggusmaximus.DiggusMaximusClientMod;
 import net.kyrptonaught.diggusmaximus.DiggusMaximusMod;
 import net.kyrptonaught.diggusmaximus.ExcavateHelper;
-import net.kyrptonaught.diggusmaximus.ExcavateTypes;
 import net.kyrptonaught.diggusmaximus.config.Blacklist;
 import net.kyrptonaught.diggusmaximus.config.BlockCategory;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
-import net.kyrptonaught.diggusmaximus.config.ExcavatingShapes;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.TranslatableText;
@@ -26,13 +25,14 @@ import java.util.function.Function;
 @Environment(EnvType.CLIENT)
 public class ModMenuIntegration implements ModMenuApi {
 
+    /*
     @Override
     public String getModId() {
         return DiggusMaximusMod.MOD_ID;
     }
-
+     */
     @Override
-    public Function<Screen, ? extends Screen> getConfigScreenFactory() {
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return (screen) -> {
             ConfigOptions options = DiggusMaximusMod.getOptions();
             //ExcavatingShapes shapes = DiggusMaximusMod.getExcavatingShapes();
