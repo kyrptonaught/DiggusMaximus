@@ -7,6 +7,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.TagGroup;
@@ -30,7 +31,7 @@ public class ExcavateHelper {
     }
 
     static void pickupDrops(World world, BlockPos pos, PlayerEntity player) {
-        List<ItemEntity> drops = world.getEntitiesByClass(ItemEntity.class, new Box(pos), null);
+        List<ItemEntity> drops = world.getEntitiesByClass(ItemEntity.class, new Box(pos), EntityPredicates.VALID_ENTITY);
         drops.forEach(item -> {
             ItemStack stack = item.getStack();
             player.getInventory().insertStack(stack);
@@ -59,7 +60,7 @@ public class ExcavateHelper {
         return startID.equals(newID);
     }
 
-     //copied from: net.minecraft.tag.TagContainer:getTagsFor
+    //copied from: net.minecraft.tag.TagContainer:getTagsFor
     static Collection<Identifier> getTagsFor(TagGroup<Block> container, Block object) {
         List<Identifier> list = Lists.newArrayList();
         for (Map.Entry<Identifier, Tag<Block>> identifierTagEntry : container.getTags().entrySet()) {

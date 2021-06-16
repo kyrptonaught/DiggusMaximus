@@ -5,6 +5,7 @@
   "key.diggusmaximus.config.enabled": "Enabled",
   "key.diggusmaximus.config.hotkey": "Keybind",
   "key.diggusmaximus.config.invertactivation": "Invert Activation",
+  "key.diggusmaximus.config.sneaktoexcavate": "Sneaking triggers excavating(serverside)",
   "key.diggusmaximus.config.minediag": "Mine blocks diagonally, excludes shapes",
   "key.diggusmaximus.config.maxmine": "Max mined blocks",
   "key.diggusmaximus.config.maxdistance": "Max distance",

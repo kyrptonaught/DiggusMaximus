@@ -27,8 +27,8 @@ dependencies {
 	modImplementation  "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation  "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation 'net.kyrptonaught:kyrptconfig:1.1.9-1.17'
-	include 'net.kyrptonaught:kyrptconfig:1.1.9-1.17'
+	modImplementation 'net.kyrptonaught:kyrptconfig:1.1.10-1.17'
+	include 'net.kyrptonaught:kyrptconfig:1.1.10-1.17'
 }
 
 processResources {

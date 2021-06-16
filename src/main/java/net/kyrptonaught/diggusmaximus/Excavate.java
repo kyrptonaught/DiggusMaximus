@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-class Excavate {
+public class Excavate {
     private final BlockPos startPos;
     private final PlayerEntity player;
     private Identifier startID;
@@ -25,7 +25,7 @@ class Excavate {
     private final Direction facing;
     private int shapeSelection = -1;
 
-    Excavate(BlockPos pos, Identifier blockID, PlayerEntity player, Direction facing) {
+    public Excavate(BlockPos pos, Identifier blockID, PlayerEntity player, Direction facing) {
         this.startPos = pos;
         this.player = player;
         this.world = player.getEntityWorld();
@@ -36,7 +36,7 @@ class Excavate {
         this.facing = facing;
     }
 
-    void startExcavate(int shapeSelection) {
+    public void startExcavate(int shapeSelection) {
         this.shapeSelection = shapeSelection;
         forceExcavateAt(startPos);
         if (startID == null) return;

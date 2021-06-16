@@ -15,6 +15,9 @@ public class ConfigOptions implements AbstractConfigFile {
     @Comment("Inverts the keybinding activation")
     public boolean invertActivation = false;
 
+    @Comment("Sneak to excavate(works serverside only)")
+    public boolean sneakToExcavate = false;
+
     @Comment("Should mine diagonally, excludes shape excavating")
     public boolean mineDiag = true;
 

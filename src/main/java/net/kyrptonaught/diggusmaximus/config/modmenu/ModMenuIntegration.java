@@ -14,13 +14,11 @@ import net.kyrptonaught.diggusmaximus.ExcavateHelper;
 import net.kyrptonaught.diggusmaximus.config.Blacklist;
 import net.kyrptonaught.diggusmaximus.config.BlockCategory;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class ModMenuIntegration implements ModMenuApi {
@@ -51,6 +49,7 @@ public class ModMenuIntegration implements ModMenuApi {
             category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.enabled"), options.enabled).setSaveConsumer(val -> options.enabled = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startKeyCodeField(new TranslatableText("key.diggusmaximus.config.hotkey"), DiggusMaximusClientMod.activationKey.getKeybinding().orElse(InputUtil.UNKNOWN_KEY)).setSaveConsumer(key -> options.keybinding = key.getTranslationKey()).build());
             category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.invertactivation"), options.invertActivation).setSaveConsumer(val -> options.invertActivation = val).setDefaultValue(false).build());
+            category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.sneaktoexcavate"), options.sneakToExcavate).setSaveConsumer(val -> options.sneakToExcavate = val).setDefaultValue(false).build());
 
             category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.minediag"), options.mineDiag).setSaveConsumer(val -> options.mineDiag = val).setDefaultValue(true).build());
             category.addEntry(entryBuilder.startIntField(new TranslatableText("key.diggusmaximus.config.maxmine"), options.maxMinedBlocks).setSaveConsumer(val -> options.maxMinedBlocks = val).setDefaultValue(40).setMin(1).setMax(2048).build());
