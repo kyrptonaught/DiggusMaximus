@@ -9,17 +9,8 @@ import java.util.stream.Collectors;
 
 public class ExcavateTypes {
     public enum shape {
-        HorizontalLayer("horizontal layer"), Layer("layer"), Hole("hole"), onebytwo("1x2"), onebytwoTunnel("1x2 tunnel"),
-        threebythree("3x3"), threebythreetunnel("3x3 tunnel");
-        String name;
-
-        shape(String name) {
-            this.name = name;
-        }
-
-        String getName() {
-            return name;
-        }
+        HORIZONTAL_LAYER, LAYER, HOLE, ONExTWO, ONExTWO_TUNNEL,
+        THREExTHREE, THREExTHREE_TUNNEL
     }
 
     public static List<BlockPos> getSpreadType(int shapeSelection, Direction facing, BlockPos startPos, BlockPos curPos) {
@@ -27,19 +18,19 @@ public class ExcavateTypes {
             return DiggusMaximusMod.getOptions().mineDiag ? ExcavateTypes.standardDiag : ExcavateTypes.standard;
 
         switch (shape.values()[shapeSelection]) {
-            case Hole:
+            case HOLE:
                 return ExcavateTypes.hole(facing);
-            case HorizontalLayer:
+            case HORIZONTAL_LAYER:
                 return ExcavateTypes.horizontalLayer();
-            case Layer:
+            case LAYER:
                 return ExcavateTypes.layers(facing);
-            case onebytwo:
+            case ONExTWO:
                 return ExcavateTypes.onebytwo(startPos, curPos);
-            case onebytwoTunnel:
+            case ONExTWO_TUNNEL:
                 return ExcavateTypes.onebytwoTunnel(startPos, curPos, facing);
-            case threebythree:
+            case THREExTHREE:
                 return ExcavateTypes.threebythree(startPos, curPos, facing);
-            case threebythreetunnel:
+            case THREExTHREE_TUNNEL:
                 return ExcavateTypes.threebythreeTunnel(startPos, curPos, facing);
         }
         return ExcavateTypes.standard;

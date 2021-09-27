@@ -3,10 +3,13 @@ package net.kyrptonaught.diggusmaximus;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.kyrptonaught.diggusmaximus.client.KeyBinding;
 import net.kyrptonaught.kyrptconfig.config.NonConflicting.AddNonConflictingKeyBind;
 import net.kyrptonaught.kyrptconfig.config.NonConflicting.NonConflictingKeyBindData;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.TranslatableText;
 
 import java.util.List;
 
@@ -16,14 +19,13 @@ public class DiggusMaximusClientMod implements ClientModInitializer, AddNonConfl
 
     @Override
     public void onInitializeClient() {
-
         activationKey = new KeyBinding(true, true);
-        //shapeKey = new KeyBinding(false, false);
-        //cycleShapeKey = new KeyBinding(false, false);
         activationKey.setRaw(DiggusMaximusMod.getOptions().keybinding);
-        //shapeKey.setRaw(DiggusMaximusMod.getExcavatingShapes().shapeKey);
-        //cycleShapeKey.setRaw(DiggusMaximusMod.getExcavatingShapes().cycleKey);
-        /*
+
+        shapeKey = new KeyBinding(false, false);
+        cycleShapeKey = new KeyBinding(false, false);
+        shapeKey.setRaw(DiggusMaximusMod.getExcavatingShapes().shapeKey);
+        cycleShapeKey.setRaw(DiggusMaximusMod.getExcavatingShapes().cycleKey);
         ClientTickEvents.END_WORLD_TICK.register(clientWorld -> {
             if (DiggusMaximusMod.getExcavatingShapes().enableShapes && cycleShapeKey.wasPressed()) {
                 int currentSelectiong = DiggusMaximusMod.getExcavatingShapes().selectedShape.ordinal();
@@ -35,21 +37,37 @@ public class DiggusMaximusClientMod implements ClientModInitializer, AddNonConfl
                 else if (currentSelectiong < 0)
                     currentSelectiong = ExcavateTypes.shape.values().length - 1;
                 DiggusMaximusMod.getExcavatingShapes().selectedShape = ExcavateTypes.shape.values()[currentSelectiong];
-                MinecraftClient.getInstance().player.sendMessage(new TranslatableText("diggusmaximus.shape." + ExcavateTypes.shape.values()[currentSelectiong].name), true);
+                MinecraftClient.getInstance().player.sendMessage(new TranslatableText("diggusmaximus.shape." + ExcavateTypes.shape.values()[currentSelectiong]), true);
                 DiggusMaximusMod.configManager.save();
             }
         });
-         */
+
     }
 
     @Override
     public void addKeyBinding(List<NonConflictingKeyBindData> list) {
-        InputUtil.Key key = activationKey.getKeybinding().orElse(InputUtil.UNKNOWN_KEY);
-        NonConflictingKeyBindData bindData = new NonConflictingKeyBindData("key.diggusmaximus.excavate", "key.categories.diggusmaximus", key.getCategory(), key.getCode(), setKey -> {
+        InputUtil.Key activation = activationKey.getKeybinding().orElse(InputUtil.UNKNOWN_KEY);
+        NonConflictingKeyBindData acivationData = new NonConflictingKeyBindData("key.diggusmaximus.keybind.excavate", "key.categories.diggusmaximus", activation.getCategory(), activation.getCode(), setKey -> {
             DiggusMaximusMod.getOptions().keybinding = setKey.getTranslationKey();
             DiggusMaximusMod.configManager.save();
             activationKey.setRaw(setKey.getTranslationKey());
         });
-        list.add(bindData);
+        list.add(acivationData);
+
+        InputUtil.Key shape = shapeKey.getKeybinding().orElse(InputUtil.UNKNOWN_KEY);
+        NonConflictingKeyBindData shapeData = new NonConflictingKeyBindData("key.diggusmaximus.keybind.shapeexcavate", "key.categories.diggusmaximus", shape.getCategory(), shape.getCode(), setKey -> {
+            DiggusMaximusMod.getExcavatingShapes().shapeKey = setKey.getTranslationKey();
+            DiggusMaximusMod.configManager.save();
+            shapeKey.setRaw(setKey.getTranslationKey());
+        });
+        list.add(shapeData);
+
+        InputUtil.Key cycle = cycleShapeKey.getKeybinding().orElse(InputUtil.UNKNOWN_KEY);
+        NonConflictingKeyBindData cycleData = new NonConflictingKeyBindData("key.diggusmaximus.keybind.cycleshape", "key.categories.diggusmaximus", cycle.getCategory(), cycle.getCode(), setKey -> {
+            DiggusMaximusMod.getExcavatingShapes().cycleKey = setKey.getTranslationKey();
+            DiggusMaximusMod.configManager.save();
+            cycleShapeKey.setRaw(setKey.getTranslationKey());
+        });
+        list.add(cycleData);
     }
 }

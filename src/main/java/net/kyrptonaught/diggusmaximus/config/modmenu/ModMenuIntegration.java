@@ -11,9 +11,11 @@ import net.fabricmc.api.Environment;
 import net.kyrptonaught.diggusmaximus.DiggusMaximusClientMod;
 import net.kyrptonaught.diggusmaximus.DiggusMaximusMod;
 import net.kyrptonaught.diggusmaximus.ExcavateHelper;
+import net.kyrptonaught.diggusmaximus.ExcavateTypes;
 import net.kyrptonaught.diggusmaximus.config.Blacklist;
 import net.kyrptonaught.diggusmaximus.config.BlockCategory;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
+import net.kyrptonaught.diggusmaximus.config.ExcavatingShapes;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.TranslatableText;
 
@@ -33,13 +35,13 @@ public class ModMenuIntegration implements ModMenuApi {
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return (screen) -> {
             ConfigOptions options = DiggusMaximusMod.getOptions();
-            //ExcavatingShapes shapes = DiggusMaximusMod.getExcavatingShapes();
+            ExcavatingShapes shapes = DiggusMaximusMod.getExcavatingShapes();
             ConfigBuilder builder = ConfigBuilder.create().setParentScreen(screen).setTitle(new TranslatableText("Diggus Maximus Config"));
             builder.setSavingRunnable(() -> {
                 DiggusMaximusMod.configManager.save();
                 DiggusMaximusClientMod.activationKey.setRaw(options.keybinding);
-                //DiggusMaximusClientMod.shapeKey.setRaw(shapes.shapeKey);
-                //DiggusMaximusClientMod.cycleShapeKey.setRaw(shapes.cycleKey);
+                DiggusMaximusClientMod.shapeKey.setRaw(shapes.shapeKey);
+                DiggusMaximusClientMod.cycleShapeKey.setRaw(shapes.cycleKey);
                 DiggusMaximusMod.getGrouping().generateLookup();
                 ExcavateHelper.resetMaximums();
             });
@@ -80,14 +82,13 @@ public class ModMenuIntegration implements ModMenuApi {
             groupcat.addEntry(entryBuilder.startStrList(new TranslatableText("key.diggusmaximus.config.grouplist"), grouping.groups).setSaveConsumer(val -> grouping.groups = val).setDefaultValue(new ArrayList<>())
                     .setCreateNewInstance(baseListEntry -> new StringListListEntry.StringListCell("minecraft:", baseListEntry)).build());
 
-            /*
             ConfigCategory shapeCat = builder.getOrCreateCategory(new TranslatableText("key.diggusmaximus.config.shapecat"));
-            shapeCat.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.ignoreshapes"), shapes.enableShapes).setSaveConsumer(val -> shapes.enableShapes = val).setDefaultValue(true).build());
-            shapeCat.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.ignoreblock"), shapes.ignoreBlock).setSaveConsumer(val -> shapes.ignoreBlock = val).setDefaultValue(true).build());
+            shapeCat.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.enableshapes"), shapes.enableShapes).setSaveConsumer(val -> shapes.enableShapes = val).setDefaultValue(false).build());
+            shapeCat.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.diggusmaximus.config.includedifblock"), shapes.includeDifBlocks).setSaveConsumer(val -> shapes.includeDifBlocks = val).setDefaultValue(false).build());
             shapeCat.addEntry(entryBuilder.startKeyCodeField(new TranslatableText("key.diggusmaximus.config.shapekey"), DiggusMaximusClientMod.shapeKey.getKeybinding().orElse(InputUtil.UNKNOWN_KEY)).setSaveConsumer(key -> shapes.shapeKey = key.getTranslationKey()).setDefaultValue(InputUtil.UNKNOWN_KEY).build());
             shapeCat.addEntry(entryBuilder.startKeyCodeField(new TranslatableText("key.diggusmaximus.config.cyclekey"), DiggusMaximusClientMod.cycleShapeKey.getKeybinding().orElse(InputUtil.UNKNOWN_KEY)).setSaveConsumer(key -> shapes.cycleKey = key.getTranslationKey()).setDefaultValue(InputUtil.UNKNOWN_KEY).build());
-            shapeCat.addEntry(entryBuilder.startEnumSelector(new TranslatableText("key.diggusmaximus.config.selectedshape"), ExcavateTypes.shape.class, shapes.selectedShape).setEnumNameProvider(anEnum -> new TranslatableText("diggusmaximus.shape." + anEnum.name())).setSaveConsumer(val -> shapes.selectedShape = val).setDefaultValue(ExcavateTypes.shape.Layer).build());
-              */
+            shapeCat.addEntry(entryBuilder.startEnumSelector(new TranslatableText("key.diggusmaximus.config.selectedshape"), ExcavateTypes.shape.class, shapes.selectedShape).setEnumNameProvider(anEnum -> new TranslatableText("diggusmaximus.shape." + anEnum)).setSaveConsumer(val -> shapes.selectedShape = val).setDefaultValue(ExcavateTypes.shape.LAYER).build());
+
             return builder.build();
         };
     }

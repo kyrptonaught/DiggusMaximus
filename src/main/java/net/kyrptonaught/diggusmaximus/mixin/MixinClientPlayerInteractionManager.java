@@ -7,6 +7,8 @@ import net.kyrptonaught.diggusmaximus.DiggusMaximusMod;
 import net.kyrptonaught.diggusmaximus.StartExcavatePacket;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
@@ -30,7 +32,6 @@ public abstract class MixinClientPlayerInteractionManager {
     private void DIGGUS$BREAKBLOCK(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (DiggusMaximusMod.getOptions().enabled && DiggusMaximusClientMod.activationKey.isKeybindPressed())
             DIGGUS$activate(pos, null, -1);
-        /*
         else if (DiggusMaximusMod.getExcavatingShapes().enableShapes && DiggusMaximusClientMod.shapeKey.isKeybindPressed()) {
             Direction facing = null;
             HitResult result = client.player.raycast(10, 0, false);
@@ -39,8 +40,6 @@ public abstract class MixinClientPlayerInteractionManager {
             int selection = DiggusMaximusMod.getExcavatingShapes().selectedShape.ordinal();
             DIGGUS$activate(pos, facing, selection);
         }
-
-         */
     }
 
     @Unique

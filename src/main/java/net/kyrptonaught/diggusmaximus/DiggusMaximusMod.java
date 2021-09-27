@@ -18,7 +18,7 @@ public class DiggusMaximusMod implements ModInitializer {
         configManager.registerFile("config.json5", new ConfigOptions());
         configManager.registerFile("blacklist.json5", new Blacklist());
         configManager.registerFile("grouping.json5", new BlockCategory());
-        //configManager.registerFile("excavatingshapes.json5", new ExcavatingShapes());
+        configManager.registerFile("excavatingshapes.json5", new ExcavatingShapes());
         configManager.load();
         getGrouping().generateLookup();
         StartExcavatePacket.registerReceivePacket();

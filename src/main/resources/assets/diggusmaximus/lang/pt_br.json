@@ -1,6 +1,6 @@
 {
   "key.categories.diggusmaximus": "Diggus Maximus",
-  "key.diggusmaximus.excavate": "Escavar",
+  "key.diggusmaximus.keybind.excavate": "Escavar",
   "key.diggusmaximus.config.category": "Opções",
   "key.diggusmaximus.config.enabled": "Habilitar",
   "key.diggusmaximus.config.hotkey": "Atalho de teclado",

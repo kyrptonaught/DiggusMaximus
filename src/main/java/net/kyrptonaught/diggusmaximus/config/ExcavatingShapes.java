@@ -6,10 +6,10 @@ import net.kyrptonaught.kyrptconfig.config.AbstractConfigFile;
 
 public class ExcavatingShapes implements AbstractConfigFile {
     @Comment("Should shape excavating be enabled")
-    public boolean enableShapes = true;
+    public boolean enableShapes = false;
 
-    @Comment("Should shape excavating ignore if the blocks match")
-    public boolean ignoreBlock = true;
+    @Comment("Should shape excavating include different blocks")
+    public boolean includeDifBlocks = false;
 
     @Comment("Shape activation key")
     public String shapeKey = "";
@@ -18,6 +18,6 @@ public class ExcavatingShapes implements AbstractConfigFile {
     public String cycleKey = "";
 
     @Comment("Currently selected shape")
-    public ExcavateTypes.shape selectedShape = ExcavateTypes.shape.Layer;
+    public ExcavateTypes.shape selectedShape = ExcavateTypes.shape.LAYER;
 
 }

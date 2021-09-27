@@ -19,7 +19,6 @@ public class MixinBlock {
         }
         if (!DiggusMaximusMod.getOptions().playerExhaustion)
             return;
-
         player.addExhaustion(exhaustion * DiggusMaximusMod.getOptions().exhaustionMultiplier);
     }
 }

@@ -1,6 +1,6 @@
 {
   "key.categories.diggusmaximus": "连锁挖掘 §7(Diggus Maximus)",
-  "key.diggusmaximus.excavate": "激活连锁挖掘",
+  "key.diggusmaximus.keybind.excavate": "激活连锁挖掘",
   "key.diggusmaximus.config.category": "选项",
   "key.diggusmaximus.config.enabled": "启用连锁挖掘",
   "key.diggusmaximus.config.hotkey": "快捷键",

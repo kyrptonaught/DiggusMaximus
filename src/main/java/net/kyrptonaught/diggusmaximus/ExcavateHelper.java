@@ -42,7 +42,7 @@ public class ExcavateHelper {
     }
 
     static boolean isTheSameBlock(Identifier startID, Identifier newID, World world, int shapeSelection) {
-        if (shapeSelection > -1 && DiggusMaximusMod.getExcavatingShapes().ignoreBlock)
+        if (shapeSelection > -1 && DiggusMaximusMod.getExcavatingShapes().includeDifBlocks)
             return true;
         if (DiggusMaximusMod.getGrouping().tagGrouping) {
             Block newBlock = Registry.BLOCK.get(newID);
