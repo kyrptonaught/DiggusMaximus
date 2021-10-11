@@ -43,6 +43,7 @@ public class ModMenuIntegration implements ModMenuApi {
                 DiggusMaximusClientMod.shapeKey.setRaw(shapes.shapeKey);
                 DiggusMaximusClientMod.cycleShapeKey.setRaw(shapes.cycleKey);
                 DiggusMaximusMod.getGrouping().generateLookup();
+                DiggusMaximusMod.getBlackList().generateLookup();
                 ExcavateHelper.resetMaximums();
             });
             ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();

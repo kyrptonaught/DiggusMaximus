@@ -72,7 +72,7 @@ public class ExcavateHelper {
     }
 
     static boolean configAllowsMining(String blockID) {
-        return DiggusMaximusMod.getBlackList().isWhitelist == DiggusMaximusMod.getBlackList().blacklistedBlocks.contains(blockID);
+        return DiggusMaximusMod.getBlackList().isWhitelist == DiggusMaximusMod.getBlackList().lookup.contains(blockID);
     }
 
     static boolean isValidPos(BlockPos pos) {
