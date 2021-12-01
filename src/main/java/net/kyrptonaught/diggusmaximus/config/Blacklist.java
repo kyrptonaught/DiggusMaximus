@@ -1,15 +1,12 @@
 package net.kyrptonaught.diggusmaximus.config;
 
 import blue.endless.jankson.Comment;
-import com.google.common.collect.Sets;
 import net.kyrptonaught.kyrptconfig.config.AbstractConfigFile;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
 public class Blacklist implements AbstractConfigFile {
     @Comment("Function as whitelist instead")
