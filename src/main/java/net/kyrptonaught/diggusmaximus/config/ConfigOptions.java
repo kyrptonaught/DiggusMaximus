@@ -1,21 +1,24 @@
 package net.kyrptonaught.diggusmaximus.config;
 
 import blue.endless.jankson.Comment;
-import net.kyrptonaught.kyrptconfig.config.AbstractConfigFile;
+import net.kyrptonaught.diggusmaximus.client.DiggusKeyBinding;
+import net.kyrptonaught.kyrptconfig.config.ConfigWDefaults;
+import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
 
 import java.util.HashSet;
 
-public class ConfigOptions implements AbstractConfigFile {
+public class ConfigOptions extends ConfigWDefaults {
+
     @Comment("Mod enabled or disabled")
     public boolean enabled = true;
 
     @Comment("Activation key")
-    public String keybinding = "key.keyboard.grave.accent";
+    public CustomKeyBinding keybinding = new DiggusKeyBinding(true, true, "key.keyboard.grave.accent");
 
     @Comment("Inverts the keybinding activation")
     public boolean invertActivation = false;
 
-    @Comment("Sneak to excavate(works serverside only)")
+    @Comment("Sneak to excavate(can work serverside only)")
     public boolean sneakToExcavate = false;
 
     @Comment("Should mine diagonally, excludes shape excavating")
@@ -50,4 +53,14 @@ public class ConfigOptions implements AbstractConfigFile {
 
     @Comment("Other items to be considered tools ie: \"minecraft:stick\"")
     public HashSet<String> tools = new HashSet<>();
+
+    @Override
+    public ConfigOptions getDefaults() {
+        return (ConfigOptions) super.getDefaults();
+    }
+
+    @Override
+    public void afterLoad() {
+        keybinding.copyFromDefault(getDefaults().keybinding);
+    }
 }

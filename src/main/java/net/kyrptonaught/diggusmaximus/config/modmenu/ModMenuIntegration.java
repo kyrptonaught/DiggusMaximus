@@ -4,7 +4,6 @@ import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.kyrptonaught.diggusmaximus.DiggusMaximusClientMod;
 import net.kyrptonaught.diggusmaximus.DiggusMaximusMod;
 import net.kyrptonaught.diggusmaximus.ExcavateHelper;
 import net.kyrptonaught.diggusmaximus.ExcavateTypes;
@@ -39,9 +38,6 @@ public class ModMenuIntegration implements ModMenuApi {
             ConfigScreen configScreen = new ConfigScreen(screen, new TranslatableText("Diggus Maximus Config"));
             configScreen.setSavingEvent(() -> {
                 DiggusMaximusMod.configManager.save();
-                DiggusMaximusClientMod.activationKey.setRaw(options.keybinding);
-                DiggusMaximusClientMod.shapeKey.setRaw(shapes.shapeKey);
-                DiggusMaximusClientMod.cycleShapeKey.setRaw(shapes.cycleKey);
                 DiggusMaximusMod.getGrouping().generateLookup();
                 DiggusMaximusMod.getBlackList().generateLookup();
                 ExcavateHelper.resetMaximums();
@@ -50,7 +46,7 @@ public class ModMenuIntegration implements ModMenuApi {
             ConfigSection mainSection = new ConfigSection(configScreen, new TranslatableText("key.diggusmaximus.config.category"));
 
             mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.enabled"), options.enabled, true).setSaveConsumer(val -> options.enabled = val));
-            mainSection.addConfigItem(new KeybindItem(new TranslatableText("key.diggusmaximus.config.hotkey"), options.keybinding, "key.keyboard.grave.accent").setSaveConsumer(val -> options.keybinding = val));
+            mainSection.addConfigItem(new KeybindItem(new TranslatableText("key.diggusmaximus.config.hotkey"), options.keybinding.rawKey, "key.keyboard.grave.accent").setSaveConsumer(val -> options.keybinding.setRaw(val)));
             mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.invertactivation"), options.invertActivation, false).setSaveConsumer(val -> options.invertActivation = val));
             mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.sneaktoexcavate"), options.sneakToExcavate, false).setSaveConsumer(val -> options.sneakToExcavate = val));
 
@@ -85,8 +81,8 @@ public class ModMenuIntegration implements ModMenuApi {
             ConfigSection shapeSection = new ConfigSection(configScreen, new TranslatableText("key.diggusmaximus.config.shapecat"));
             shapeSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.enableshapes"), shapes.enableShapes, false).setSaveConsumer(val -> shapes.enableShapes = val));
             shapeSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.includedifblock"), shapes.includeDifBlocks, false).setSaveConsumer(val -> shapes.includeDifBlocks = val));
-            shapeSection.addConfigItem(new KeybindItem(new TranslatableText("key.diggusmaximus.config.shapekey"), shapes.shapeKey, "key.keyboard.unknown").setSaveConsumer(val -> shapes.shapeKey = val));
-            shapeSection.addConfigItem(new KeybindItem(new TranslatableText("key.diggusmaximus.config.cyclekey"), shapes.cycleKey, "key.keyboard.unknown").setSaveConsumer(val -> shapes.cycleKey = val));
+            shapeSection.addConfigItem(new KeybindItem(new TranslatableText("key.diggusmaximus.config.shapekey"), shapes.shapeKey.rawKey, "key.keyboard.unknown").setSaveConsumer(val -> shapes.shapeKey.setRaw(val)));
+            shapeSection.addConfigItem(new KeybindItem(new TranslatableText("key.diggusmaximus.config.cyclekey"), shapes.cycleKey.rawKey, "key.keyboard.unknown").setSaveConsumer(val -> shapes.cycleKey.setRaw(val)));
             shapeSection.addConfigItem(new EnumItem<>(new TranslatableText("key.diggusmaximus.config.selectedshape"), ExcavateTypes.shape.values(), shapes.selectedShape, ExcavateTypes.shape.LAYER).setSaveConsumer(val -> shapes.selectedShape = val));
 
             return configScreen;

@@ -30,9 +30,9 @@ public abstract class MixinClientPlayerInteractionManager {
 
     @Inject(method = "breakBlock", at = @At(value = "HEAD"))
     private void DIGGUS$BREAKBLOCK(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (DiggusMaximusMod.getOptions().enabled && DiggusMaximusClientMod.activationKey.isKeybindPressed())
+        if (DiggusMaximusMod.getOptions().enabled && DiggusMaximusClientMod.getActivationKey().isKeybindPressed())
             DIGGUS$activate(pos, null, -1);
-        else if (DiggusMaximusMod.getExcavatingShapes().enableShapes && DiggusMaximusClientMod.shapeKey.isKeybindPressed()) {
+        else if (DiggusMaximusMod.getExcavatingShapes().enableShapes && DiggusMaximusClientMod.getShapeKey().isKeybindPressed()) {
             Direction facing = null;
             HitResult result = client.player.raycast(10, 0, false);
             if (result.getType() == HitResult.Type.BLOCK)
