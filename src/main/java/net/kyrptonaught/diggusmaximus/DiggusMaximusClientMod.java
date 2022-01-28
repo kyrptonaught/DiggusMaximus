@@ -15,8 +15,6 @@ public class DiggusMaximusClientMod implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        System.out.println(getActivationKey().defaultKey);
-
         ClientTickEvents.END_WORLD_TICK.register(clientWorld -> {
             if (DiggusMaximusMod.getExcavatingShapes().enableShapes && getCycleKey().wasPressed()) {
                 int currentSelectiong = DiggusMaximusMod.getExcavatingShapes().selectedShape.ordinal();
@@ -51,8 +49,33 @@ public class DiggusMaximusClientMod implements ClientModInitializer {
                 getCycleKey(),
                 setKey -> DiggusMaximusMod.configManager.save()
         ));
+
+/*
+        WorldRenderEvents.BLOCK_OUTLINE.register(new Identifier(DiggusMaximusMod.MOD_ID, "highlight"), (worldRenderContext, blockOutlineContext) -> {
+            VertexConsumer outlineVertexConsumerProvider3 = worldRenderContext.consumers().getBuffer(RenderLayer.getLines());
+            drawOutLine(worldRenderContext.matrixStack(), outlineVertexConsumerProvider3, worldRenderContext.world(), new BlockPos(0, 70, 0), worldRenderContext.camera().getPos());
+            return true;
+        });
+
+ */
     }
 
+    /*
+        private void drawOutLine(MatrixStack matrices, VertexConsumer vertexConsumer, World world, BlockPos pos, Vec3d cameraPos) {
+            double x = (double) pos.getX() - cameraPos.getX(), y = (double) pos.getY() - cameraPos.getY(), z = (double) pos.getZ() - cameraPos.getZ();
+            float red = .5f, green = .5f, blue = .5f, alpha = .5f;
+            MatrixStack.Entry entry = matrices.peek();
+            VoxelShape shape = VoxelShapes.fullCube();//world.getBlockState(pos).getOutlineShape(world, pos);
+            shape.forEachEdge((k, l, m, n, o, p) -> {
+                float q = (float) (n - k);
+                float r = (float) (o - l);
+                float s = (float) (p - m);
+                float t = MathHelper.sqrt(q * q + r * r + s * s);
+                vertexConsumer.vertex(entry.getPositionMatrix(), (float) (k + x), (float) (l + y), (float) (m + z)).color(red, green, blue, alpha).normal(entry.getNormalMatrix(), q /= t, r /= t, s /= t).next();
+                vertexConsumer.vertex(entry.getPositionMatrix(), (float) (n + x), (float) (o + y), (float) (p + z)).color(red, green, blue, alpha).normal(entry.getNormalMatrix(), q, r, s).next();
+            });
+        }
+     */
     public static CustomKeyBinding getActivationKey() {
         return DiggusMaximusMod.getOptions().keybinding;
     }

@@ -57,7 +57,7 @@ public class Excavate {
     private void excavateAt(BlockPos pos) {
         if (mined >= ExcavateHelper.maxMined) return;
         Identifier block = Registry.BLOCK.getId(ExcavateHelper.getBlockAt(world, pos));
-        if (ExcavateHelper.isTheSameBlock(startID, block, world, shapeSelection) && ExcavateHelper.canMine(player, startTool, startPos, pos) && isExcavatingAllowed(pos)) {
+        if (ExcavateHelper.isTheSameBlock(startID, block, world, shapeSelection) && ExcavateHelper.canMine(player, startTool, world, startPos, pos) && isExcavatingAllowed(pos)) {
             points.add(pos);
             mined++;
             if (DiggusMaximusMod.getOptions().autoPickup)
