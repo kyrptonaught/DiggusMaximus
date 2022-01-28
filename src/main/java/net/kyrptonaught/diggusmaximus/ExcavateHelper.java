@@ -83,8 +83,12 @@ public class ExcavateHelper {
         return (world.getBlockState(pos).getBlock());
     }
 
-    static boolean canMine(PlayerEntity player, Item tool, BlockPos startPos, BlockPos pos) {
-        return isWithinDistance(startPos, pos) && checkTool(player, tool);
+    static boolean canMine(PlayerEntity player, Item tool, World world, BlockPos startPos, BlockPos pos) {
+        return isWithinDistance(startPos, pos) && checkTool(player, tool) && isBreakableBlock(getBlockAt(world, pos));
+    }
+
+    private static boolean isBreakableBlock(Block block) {
+        return block.getHardness() >= 0;
     }
 
     private static boolean isWithinDistance(BlockPos startPos, BlockPos pos) {
