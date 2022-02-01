@@ -21,5 +21,5 @@
   "key.diggusmaximus.config.groupcat": "方块组别",
   "key.diggusmaximus.config.taggrouping": "使用标签组",
   "key.diggusmaximus.config.customgrouping": "使用定制组",
-  "key.diggusmaximus.config.grouplist": "定制组 (用逗号分隔每个命名空间 ID)"
+  "key.diggusmaximus.config.grouplist": "定制组"
 }

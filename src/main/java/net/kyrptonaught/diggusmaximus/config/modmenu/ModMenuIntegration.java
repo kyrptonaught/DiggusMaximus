@@ -76,7 +76,7 @@ public class ModMenuIntegration implements ModMenuApi {
             ConfigSection groupSection = new ConfigSection(configScreen, new TranslatableText("key.diggusmaximus.config.groupcat"));
             groupSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.taggrouping"), grouping.tagGrouping, false).setSaveConsumer(val -> grouping.tagGrouping = val));
             groupSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.customgrouping"), grouping.customGrouping, false).setSaveConsumer(val -> grouping.customGrouping = val));
-            groupSection.addConfigItem(new StringList(new TranslatableText("key.diggusmaximus.config.grouplist"), new ArrayList<>(grouping.groups), new ArrayList<>()).setSaveConsumer(val -> grouping.groups = val));
+            groupSection.addConfigItem(new GroupingList(new TranslatableText("key.diggusmaximus.config.grouplist"), new ArrayList<>(grouping.groups), new ArrayList<>()).setSaveConsumer(val -> grouping.groups = val));
 
             ConfigSection shapeSection = new ConfigSection(configScreen, new TranslatableText("key.diggusmaximus.config.shapecat"));
             shapeSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.enableshapes"), shapes.enableShapes, false).setSaveConsumer(val -> shapes.enableShapes = val));

@@ -11,7 +11,7 @@ public class DiggusKeyBinding extends CustomKeyBinding {
     public DiggusKeyBinding(boolean respectsInvert, boolean unknownIsActivated, String defaultKey) {
         super(DiggusMaximusMod.MOD_ID, unknownIsActivated);
         this.respectsInvert = respectsInvert;
-        this.defaultKey = InputUtil.fromTranslationKey(defaultKey);
+        this.defaultKey = defaultKey;
     }
 
     public DiggusKeyBinding copyKeyFrom(CustomKeyBinding other) {
@@ -21,9 +21,9 @@ public class DiggusKeyBinding extends CustomKeyBinding {
 
     public boolean isKeybindPressed() {
         boolean pressed = super.isKeybindPressed();
-        if (keycode == null) // Invalid key
+        if (parsedKey == null) // Invalid key
             return false;
-        if (keycode == InputUtil.UNKNOWN_KEY)
+        if (parsedKey == InputUtil.UNKNOWN_KEY)
             return unknownIsActivated; // Always pressed for empty or explicitly "key.keyboard.unknown"
         if (respectsInvert && DiggusMaximusMod.getOptions().invertActivation) return !pressed;
         return pressed;
