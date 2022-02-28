@@ -18,7 +18,6 @@ import net.kyrptonaught.kyrptconfig.config.screen.items.EnumItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.KeybindItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.BlockIconList;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.ItemIconList;
-import net.kyrptonaught.kyrptconfig.config.screen.items.lists.StringList;
 import net.kyrptonaught.kyrptconfig.config.screen.items.number.FloatItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.number.IntegerItem;
 import net.minecraft.text.TranslatableText;

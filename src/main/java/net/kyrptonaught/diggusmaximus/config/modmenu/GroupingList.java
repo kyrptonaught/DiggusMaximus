@@ -1,13 +1,9 @@
 package net.kyrptonaught.diggusmaximus.config.modmenu;
 
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
-import net.kyrptonaught.kyrptconfig.config.screen.items.ConfigItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.BlockIconList;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.StringList;
-import net.kyrptonaught.kyrptconfig.config.screen.items.lists.entries.ListStringEntry;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 

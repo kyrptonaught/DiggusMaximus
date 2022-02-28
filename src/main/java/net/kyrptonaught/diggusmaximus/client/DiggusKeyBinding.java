@@ -12,6 +12,7 @@ public class DiggusKeyBinding extends CustomKeyBinding {
         super(DiggusMaximusMod.MOD_ID, unknownIsActivated);
         this.respectsInvert = respectsInvert;
         this.defaultKey = defaultKey;
+        this.rawKey = defaultKey;
     }
 
     public DiggusKeyBinding copyKeyFrom(CustomKeyBinding other) {

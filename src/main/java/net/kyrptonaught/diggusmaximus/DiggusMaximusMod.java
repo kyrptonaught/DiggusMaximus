@@ -23,7 +23,6 @@ public class DiggusMaximusMod implements ModInitializer {
         getGrouping().generateLookup();
         getBlackList().generateLookup();
         StartExcavatePacket.registerReceivePacket();
-
     }
 
     public static ConfigOptions getOptions() {
