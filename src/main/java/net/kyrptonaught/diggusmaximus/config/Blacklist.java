@@ -1,10 +1,9 @@
 package net.kyrptonaught.diggusmaximus.config;
 
 import blue.endless.jankson.Comment;
+import net.kyrptonaught.kyrptconfig.TagHelper;
 import net.kyrptonaught.kyrptconfig.config.AbstractConfigFile;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.HashSet;
 
@@ -22,10 +21,11 @@ public class Blacklist implements AbstractConfigFile {
         blacklistedBlocks.forEach(entry -> {
             if (entry.startsWith("#")) {
                 entry = entry.replaceAll("#", "");
-                if (BlockTags.getTagGroup().contains(new Identifier(entry)))
-                    BlockTags.getTagGroup().getTag(new Identifier(entry)).values().forEach(block -> {
-                        lookup.add(Registry.BLOCK.getId(block).toString());
-                    });
+
+                TagHelper.getBlockIDsInTag(new Identifier(entry)).forEach(identifier -> {
+                    lookup.add(identifier.toString());
+                });
+
             } else lookup.add(entry);
         });
     }

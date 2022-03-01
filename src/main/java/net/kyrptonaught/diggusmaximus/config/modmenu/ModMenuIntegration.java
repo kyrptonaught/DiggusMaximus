@@ -64,16 +64,15 @@ public class ModMenuIntegration implements ModMenuApi {
             mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.playerexhaustion"), options.playerExhaustion, true).setSaveConsumer(val -> options.playerExhaustion = val));
             mainSection.addConfigItem(new FloatItem(new TranslatableText("key.diggusmaximus.config.exhaustionmultiplier"), options.exhaustionMultiplier, 1.0f).setSaveConsumer(val -> options.exhaustionMultiplier = val));
 
-            mainSection.addConfigItem(new ItemIconList(new TranslatableText("key.diggusmaximus.config.toollist"), new ArrayList<>(options.tools), new ArrayList<>()).setSaveConsumer(val -> options.tools = new HashSet<>(val)));
+            mainSection.addConfigItem(new ItemIconList(new TranslatableText("key.diggusmaximus.config.toollist"), new ArrayList<>(options.tools), new ArrayList<>(), false).setSaveConsumer(val -> options.tools = new HashSet<>(val)));
 
             Blacklist blacklist = DiggusMaximusMod.getBlackList();
             ConfigSection blacklistSection = new ConfigSection(configScreen, new TranslatableText("key.diggusmaximus.config.blacklistcat"));
             blacklistSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.invertlist"), blacklist.isWhitelist, false).setSaveConsumer(val -> blacklist.isWhitelist = val));
-            blacklistSection.addConfigItem(new BlockIconList(new TranslatableText("key.diggusmaximus.config.blacklist"), new ArrayList<>(blacklist.blacklistedBlocks), new ArrayList<>()).setAllowTags(true).setSaveConsumer(val -> blacklist.blacklistedBlocks = new HashSet<>(val)));
+            blacklistSection.addConfigItem(new BlockIconList(new TranslatableText("key.diggusmaximus.config.blacklist"), new ArrayList<>(blacklist.blacklistedBlocks), new ArrayList<>(), true).setSaveConsumer(val -> blacklist.blacklistedBlocks = new HashSet<>(val)));
 
             BlockCategory grouping = DiggusMaximusMod.getGrouping();
             ConfigSection groupSection = new ConfigSection(configScreen, new TranslatableText("key.diggusmaximus.config.groupcat"));
-            groupSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.taggrouping"), grouping.tagGrouping, false).setSaveConsumer(val -> grouping.tagGrouping = val));
             groupSection.addConfigItem(new BooleanItem(new TranslatableText("key.diggusmaximus.config.customgrouping"), grouping.customGrouping, false).setSaveConsumer(val -> grouping.customGrouping = val));
             groupSection.addConfigItem(new GroupingList(new TranslatableText("key.diggusmaximus.config.grouplist"), new ArrayList<>(grouping.groups), new ArrayList<>()).setSaveConsumer(val -> grouping.groups = val));
 

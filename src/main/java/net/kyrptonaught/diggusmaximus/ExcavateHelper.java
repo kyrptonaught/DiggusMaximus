@@ -1,25 +1,18 @@
 package net.kyrptonaught.diggusmaximus;
 
-import com.google.common.collect.Lists;
-import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.Tag;
-import net.minecraft.tag.TagGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public class ExcavateHelper {
     static int maxMined = Math.min(DiggusMaximusMod.getOptions().maxMinedBlocks, 2048);
@@ -44,15 +37,14 @@ public class ExcavateHelper {
     static boolean isTheSameBlock(Identifier startID, Identifier newID, World world, int shapeSelection) {
         if (shapeSelection > -1 && DiggusMaximusMod.getExcavatingShapes().includeDifBlocks)
             return true;
-        if (DiggusMaximusMod.getGrouping().tagGrouping) {
+
+        // Not sure if this makes sense anymore with the all the tags that exist now. For example this will now consider bamboo and all types of dirt as the same block since they are all in "bamboo_plantable_on"
+        /* if (DiggusMaximusMod.getGrouping().tagGrouping) {
             Block newBlock = Registry.BLOCK.get(newID);
-            for (Identifier tagID : getTagsFor(BlockTags.getTagGroup(), Registry.BLOCK.get(startID))) {
-                if (TagRegistry.block(tagID).contains(newBlock)) {
-                    newID = startID;
-                    break;
-                }
-            }
-        }
+            if (Registry.BLOCK.get(startID).getRegistryEntry().streamTags().anyMatch(blockTagKey1 -> newBlock.getRegistryEntry().isIn(blockTagKey1)))
+                newID = startID;
+
+        } */
         if (DiggusMaximusMod.getGrouping().customGrouping) {
             newID = DiggusMaximusMod.getIDFromConfigLookup(newID);
             startID = DiggusMaximusMod.getIDFromConfigLookup(startID);
@@ -60,16 +52,6 @@ public class ExcavateHelper {
         return startID.equals(newID);
     }
 
-    //copied from: net.minecraft.tag.TagContainer:getTagsFor
-    static Collection<Identifier> getTagsFor(TagGroup<Block> container, Block object) {
-        List<Identifier> list = Lists.newArrayList();
-        for (Map.Entry<Identifier, Tag<Block>> identifierTagEntry : container.getTags().entrySet()) {
-            if (identifierTagEntry.getValue().contains(object)) {
-                list.add(identifierTagEntry.getKey());
-            }
-        }
-        return list;
-    }
 
     static boolean configAllowsMining(String blockID) {
         return DiggusMaximusMod.getBlackList().isWhitelist == DiggusMaximusMod.getBlackList().lookup.contains(blockID);

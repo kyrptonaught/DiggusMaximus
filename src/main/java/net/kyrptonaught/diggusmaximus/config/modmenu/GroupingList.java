@@ -20,6 +20,12 @@ public class GroupingList extends StringList {
         this.addButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.add"), widget -> {
             addConfigItem(createListEntry(""));
         });
+        setToolTip();
+    }
+
+    public void setToolTip() {
+        setToolTip(new TranslatableText("key.kyrptconfig.config.hastags"),
+                new TranslatableText("key.kyrptconfig.config.tagsdisplay"));
     }
 
     @Override
@@ -66,7 +72,7 @@ public class GroupingList extends StringList {
         protected boolean scheduleToRemove = false;
 
         public BlockIconListWDel(Text name, List<String> value, List<String> defaultValue) {
-            super(name, value, defaultValue);
+            super(name, value, defaultValue, true);
             this.delButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.delete"), widget -> {
                 this.scheduleToRemove = true;
             });

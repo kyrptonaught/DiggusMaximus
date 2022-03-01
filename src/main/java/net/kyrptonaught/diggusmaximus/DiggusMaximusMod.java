@@ -1,6 +1,7 @@
 package net.kyrptonaught.diggusmaximus;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.kyrptonaught.diggusmaximus.config.Blacklist;
 import net.kyrptonaught.diggusmaximus.config.BlockCategory;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
@@ -20,8 +21,11 @@ public class DiggusMaximusMod implements ModInitializer {
         configManager.registerFile("grouping.json5", new BlockCategory());
         configManager.registerFile("excavatingshapes.json5", new ExcavatingShapes());
         configManager.load();
-        getGrouping().generateLookup();
-        getBlackList().generateLookup();
+
+        ServerLifecycleEvents.SERVER_STARTED.register(server -> { // tags need to exist before we can generate the lookup
+            getGrouping().generateLookup();
+            getBlackList().generateLookup();
+        });
         StartExcavatePacket.registerReceivePacket();
     }
 
