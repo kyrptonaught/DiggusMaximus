@@ -14,10 +14,10 @@ public class ExcavatingShapes extends ConfigWDefaults {
     public boolean includeDifBlocks = false;
 
     @Comment("Shape activation key")
-    public CustomKeyBinding shapeKey = new DiggusKeyBinding(false, false, "key.keyboard.unknown");
+    public DiggusKeyBinding shapeKey = new DiggusKeyBinding(false, false, "key.keyboard.unknown");
 
     @Comment("Shape type cycle key, sneak to reverse cycle")
-    public CustomKeyBinding cycleKey = new DiggusKeyBinding(false, false, "key.keyboard.unknown");
+    public DiggusKeyBinding cycleKey = new DiggusKeyBinding(false, false, "key.keyboard.unknown");
 
     @Comment("Currently selected shape")
     public ExcavateTypes.shape selectedShape = ExcavateTypes.shape.LAYER;
