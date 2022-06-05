@@ -4,7 +4,6 @@ import blue.endless.jankson.Comment;
 import net.kyrptonaught.diggusmaximus.ExcavateTypes;
 import net.kyrptonaught.diggusmaximus.client.DiggusKeyBinding;
 import net.kyrptonaught.kyrptconfig.config.ConfigWDefaults;
-import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
 
 public class ExcavatingShapes extends ConfigWDefaults {
     @Comment("Should shape excavating be enabled")

@@ -3,7 +3,6 @@ package net.kyrptonaught.diggusmaximus.config;
 import blue.endless.jankson.Comment;
 import net.kyrptonaught.diggusmaximus.client.DiggusKeyBinding;
 import net.kyrptonaught.kyrptconfig.config.ConfigWDefaults;
-import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
 
 import java.util.HashSet;
 
