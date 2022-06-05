@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
 import net.kyrptonaught.kyrptconfig.keybinding.DisplayOnlyKeyBind;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
 public class DiggusMaximusClientMod implements ClientModInitializer {
@@ -26,7 +26,7 @@ public class DiggusMaximusClientMod implements ClientModInitializer {
                 else if (currentSelectiong < 0)
                     currentSelectiong = ExcavateTypes.shape.values().length - 1;
                 DiggusMaximusMod.getExcavatingShapes().selectedShape = ExcavateTypes.shape.values()[currentSelectiong];
-                MinecraftClient.getInstance().player.sendMessage(new TranslatableText("diggusmaximus.shape." + ExcavateTypes.shape.values()[currentSelectiong]), true);
+                MinecraftClient.getInstance().player.sendMessage(Text.translatable("diggusmaximus.shape." + ExcavateTypes.shape.values()[currentSelectiong]), true);
                 DiggusMaximusMod.configManager.save();
             }
         });

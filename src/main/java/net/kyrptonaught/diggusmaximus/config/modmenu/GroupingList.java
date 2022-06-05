@@ -5,7 +5,6 @@ import net.kyrptonaught.kyrptconfig.config.screen.items.lists.BlockIconList;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.StringList;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +16,15 @@ public class GroupingList extends StringList {
         super(name, value, defaultValue);
         this.configs = new CopyOnWriteArrayList<>();
         setValue(value);
-        this.addButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.add"), widget -> {
+        this.addButton = new NotSuckyButton(0, 0, 35, 20, Text.translatable("key.kyrptconfig.config.add"), widget -> {
             addConfigItem(createListEntry(""));
         });
         setToolTip();
     }
 
     public void setToolTip() {
-        setToolTip(new TranslatableText("key.kyrptconfig.config.hastags"),
-                new TranslatableText("key.kyrptconfig.config.tagsdisplay"));
+        setToolTip(Text.translatable("key.kyrptconfig.config.hastags"),
+                Text.translatable("key.kyrptconfig.config.tagsdisplay"));
     }
 
     @Override
@@ -53,7 +52,7 @@ public class GroupingList extends StringList {
         for (int i = 0; i < blocks.length; i++)
             blocks[i] = blocks[i].trim();
 
-        return new BlockIconListWDel(new TranslatableText("key.diggusmaximus.config.customgroupinggroup"), List.of(blocks), new ArrayList<>());
+        return new BlockIconListWDel(Text.translatable("key.diggusmaximus.config.customgroupinggroup"), List.of(blocks), new ArrayList<>());
     }
 
     public List<String> getNewValues() {
@@ -73,7 +72,7 @@ public class GroupingList extends StringList {
 
         public BlockIconListWDel(Text name, List<String> value, List<String> defaultValue) {
             super(name, value, defaultValue, true);
-            this.delButton = new NotSuckyButton(0, 0, 35, 20, new TranslatableText("key.kyrptconfig.config.delete"), widget -> {
+            this.delButton = new NotSuckyButton(0, 0, 35, 20, Text.translatable("key.kyrptconfig.config.delete"), widget -> {
                 this.scheduleToRemove = true;
             });
         }
