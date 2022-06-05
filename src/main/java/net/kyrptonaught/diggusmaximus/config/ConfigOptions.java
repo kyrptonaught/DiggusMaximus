@@ -13,7 +13,7 @@ public class ConfigOptions extends ConfigWDefaults {
     public boolean enabled = true;
 
     @Comment("Activation key")
-    public CustomKeyBinding keybinding = new DiggusKeyBinding(true, true, "key.keyboard.grave.accent");
+    public DiggusKeyBinding keybinding = new DiggusKeyBinding(true, true, "key.keyboard.grave.accent");
 
     @Comment("Inverts the keybinding activation")
     public boolean invertActivation = false;

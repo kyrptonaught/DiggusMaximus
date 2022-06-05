@@ -26,7 +26,7 @@ public class Blacklist implements AbstractConfigFile {
                     lookup.add(identifier.toString());
                 });
 
-            } else lookup.add(entry);
+            } else lookup.add((new Identifier(entry)).toString());
         });
     }
 }
