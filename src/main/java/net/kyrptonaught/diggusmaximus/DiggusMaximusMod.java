@@ -2,11 +2,13 @@ package net.kyrptonaught.diggusmaximus;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.kyrptonaught.diggusmaximus.client.DiggusKeyBinding;
 import net.kyrptonaught.diggusmaximus.config.Blacklist;
 import net.kyrptonaught.diggusmaximus.config.BlockCategory;
 import net.kyrptonaught.diggusmaximus.config.ConfigOptions;
 import net.kyrptonaught.diggusmaximus.config.ExcavatingShapes;
 import net.kyrptonaught.kyrptconfig.config.ConfigManager;
+import net.kyrptonaught.kyrptconfig.config.CustomSerializer;
 import net.minecraft.util.Identifier;
 
 public class DiggusMaximusMod implements ModInitializer {
@@ -16,6 +18,11 @@ public class DiggusMaximusMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        configManager.addSerializers(new CustomSerializer(DiggusKeyBinding.class, String.class)
+                .registerSerializer(DiggusKeyBinding::saveKeybinding)
+                .registerDeserializer(DiggusKeyBinding::loadKeybinding));
+
+
         configManager.registerFile("config.json5", new ConfigOptions());
         configManager.registerFile("blacklist.json5", new Blacklist());
         configManager.registerFile("grouping.json5", new BlockCategory());
