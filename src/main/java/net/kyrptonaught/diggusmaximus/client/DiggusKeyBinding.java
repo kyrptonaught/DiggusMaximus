@@ -1,10 +1,6 @@
 package net.kyrptonaught.diggusmaximus.client;
 
-import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.JsonPrimitive;
-import blue.endless.jankson.api.Marshaller;
 import net.kyrptonaught.diggusmaximus.DiggusMaximusMod;
-import net.kyrptonaught.kyrptconfig.config.ConfigDefaultCopyable;
 import net.kyrptonaught.kyrptconfig.keybinding.CustomKeyBinding;
 import net.minecraft.client.util.InputUtil;
 
@@ -35,19 +31,5 @@ public class DiggusKeyBinding extends CustomKeyBinding {
             return unknownIsActivated; // Always pressed for empty or explicitly "key.keyboard.unknown"
         if (respectsInvert && DiggusMaximusMod.getOptions().invertActivation) return !pressed;
         return pressed;
-    }
-
-    @Override
-    public void copyFromDefault(ConfigDefaultCopyable otherDefault) {
-        super.copyFromDefault(otherDefault);
-        this.respectsInvert = ((DiggusKeyBinding) otherDefault).respectsInvert;
-    }
-
-    public static JsonElement saveKeybinding(Object keyBinding, Marshaller m) {
-        return new JsonPrimitive(((DiggusKeyBinding) keyBinding).rawKey);
-    }
-
-    public static DiggusKeyBinding loadKeybinding(String s, Marshaller m) {
-        return new DiggusKeyBinding(s);
     }
 }

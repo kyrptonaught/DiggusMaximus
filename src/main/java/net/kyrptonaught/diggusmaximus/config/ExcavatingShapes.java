@@ -3,9 +3,10 @@ package net.kyrptonaught.diggusmaximus.config;
 import blue.endless.jankson.Comment;
 import net.kyrptonaught.diggusmaximus.ExcavateTypes;
 import net.kyrptonaught.diggusmaximus.client.DiggusKeyBinding;
+import net.kyrptonaught.kyrptconfig.config.AbstractConfigFile;
 import net.kyrptonaught.kyrptconfig.config.ConfigWDefaults;
 
-public class ExcavatingShapes extends ConfigWDefaults {
+public class ExcavatingShapes implements AbstractConfigFile {
     @Comment("Should shape excavating be enabled")
     public boolean enableShapes = false;
 
@@ -21,14 +22,4 @@ public class ExcavatingShapes extends ConfigWDefaults {
     @Comment("Currently selected shape")
     public ExcavateTypes.shape selectedShape = ExcavateTypes.shape.LAYER;
 
-    @Override
-    public ExcavatingShapes getDefaults() {
-        return (ExcavatingShapes) super.getDefaults();
-    }
-
-    @Override
-    public void afterLoad() {
-        shapeKey.copyFromDefault(getDefaults().shapeKey);
-        cycleKey.copyFromDefault(getDefaults().cycleKey);
-    }
 }

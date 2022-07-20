@@ -2,11 +2,12 @@ package net.kyrptonaught.diggusmaximus.config;
 
 import blue.endless.jankson.Comment;
 import net.kyrptonaught.diggusmaximus.client.DiggusKeyBinding;
+import net.kyrptonaught.kyrptconfig.config.AbstractConfigFile;
 import net.kyrptonaught.kyrptconfig.config.ConfigWDefaults;
 
 import java.util.HashSet;
 
-public class ConfigOptions extends ConfigWDefaults {
+public class ConfigOptions implements AbstractConfigFile {
 
     @Comment("Mod enabled or disabled")
     public boolean enabled = true;
@@ -52,14 +53,4 @@ public class ConfigOptions extends ConfigWDefaults {
 
     @Comment("Other items to be considered tools ie: \"minecraft:stick\"")
     public HashSet<String> tools = new HashSet<>();
-
-    @Override
-    public ConfigOptions getDefaults() {
-        return (ConfigOptions) super.getDefaults();
-    }
-
-    @Override
-    public void afterLoad() {
-        keybinding.copyFromDefault(getDefaults().keybinding);
-    }
 }

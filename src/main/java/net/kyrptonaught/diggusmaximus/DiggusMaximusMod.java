@@ -19,10 +19,6 @@ public class DiggusMaximusMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        configManager.addSerializers(new CustomSerializer(DiggusKeyBinding.class, String.class)
-                .registerSerializer(DiggusKeyBinding::saveKeybinding)
-                .registerDeserializer(DiggusKeyBinding::loadKeybinding));
-
         configManager.registerFile("config.json5", new ConfigOptions());
         configManager.registerFile("blacklist.json5", new Blacklist());
         configManager.registerFile("grouping.json5", new BlockCategory());
