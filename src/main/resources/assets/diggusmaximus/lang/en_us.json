@@ -24,6 +24,7 @@
   "key.diggusmaximus.config.blacklist": "Blacklisted Blocks",
   "key.diggusmaximus.config.groupcat": "Block Grouping",
   "key.diggusmaximus.config.taggrouping": "Use tag grouping",
+  "key.diggusmaximus.config.defaulttaggroups": "Use default tag groups (e.g. ore tags)",
   "key.diggusmaximus.config.customgrouping": "Use custom grouping",
   "key.diggusmaximus.config.customgroupinggroup": "Block Group",
   "key.diggusmaximus.config.grouplist": "Custom Groups",
