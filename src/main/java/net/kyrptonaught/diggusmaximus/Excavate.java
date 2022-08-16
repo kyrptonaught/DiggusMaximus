@@ -1,6 +1,7 @@
 package net.kyrptonaught.diggusmaximus;
 
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -66,7 +67,12 @@ public class Excavate {
     }
 
     private boolean isExcavatingAllowed(BlockPos pos) {
-        return PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, pos, world.getBlockState(pos), world.getBlockEntity(pos)) && ((ServerPlayerEntity) player).interactionManager.tryBreakBlock(pos);
+        Block startBlock = ExcavateHelper.getBlockAt(world, pos);
+        if (!PlayerBlockBreakEvents.BEFORE.invoker().beforeBlockBreak(world, player, pos, world.getBlockState(pos), world.getBlockEntity(pos)) || !((ServerPlayerEntity) player).interactionManager.tryBreakBlock(pos)) {
+            // Even if block breaking fails, continue excavation if the block changed (mod compat)
+            return startBlock != ExcavateHelper.getBlockAt(world, pos);
+        }
+        return true;
     }
 
     private void forceExcavateAt(BlockPos pos) {
