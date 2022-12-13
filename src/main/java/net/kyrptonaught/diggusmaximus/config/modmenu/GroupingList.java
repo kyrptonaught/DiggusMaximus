@@ -87,8 +87,8 @@ public class GroupingList extends StringList {
         public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
             super.render(matrices, x, y, mouseX, mouseY, delta);
             if (expanded) {
-                this.delButton.y = y;
-                this.delButton.x = addButton.x - (delButton.getWidth() / 2) - 20;
+                this.delButton.setY(y);
+                this.delButton.setX(addButton.getX() - (delButton.getWidth() / 2) - 20);
                 this.delButton.render(matrices, mouseX, mouseY, delta);
             }
         }

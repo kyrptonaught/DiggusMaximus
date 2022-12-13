@@ -3,11 +3,11 @@ package net.kyrptonaught.diggusmaximus;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.ArrayDeque;
@@ -56,7 +56,7 @@ public class Excavate {
 
     private void excavateAt(BlockPos pos) {
         if (mined >= ExcavateHelper.maxMined) return;
-        Identifier block = Registry.BLOCK.getId(ExcavateHelper.getBlockAt(world, pos));
+        Identifier block = Registries.BLOCK.getId(ExcavateHelper.getBlockAt(world, pos));
         if (ExcavateHelper.isTheSameBlock(startID, block, world, shapeSelection) && ExcavateHelper.canMine(player, startTool, world, startPos, pos) && isExcavatingAllowed(pos)) {
             points.add(pos);
             mined++;

@@ -7,11 +7,11 @@ import net.kyrptonaught.diggusmaximus.DiggusMaximusMod;
 import net.kyrptonaught.diggusmaximus.StartExcavatePacket;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -44,6 +44,6 @@ public abstract class MixinClientPlayerInteractionManager {
 
     @Unique
     private void DIGGUS$activate(BlockPos pos, Direction facing, int shapeSelection) {
-        StartExcavatePacket.sendExcavatePacket(pos, Registry.BLOCK.getId(this.client.world.getBlockState(pos).getBlock()), facing, shapeSelection);
+        StartExcavatePacket.sendExcavatePacket(pos, Registries.BLOCK.getId(this.client.world.getBlockState(pos).getBlock()), facing, shapeSelection);
     }
 }
