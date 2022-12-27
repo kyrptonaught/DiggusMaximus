@@ -53,9 +53,6 @@ public class ModMenuIntegration implements ModMenuApi {
             mainSection.addConfigItem(new IntegerItem(Text.translatable("key.diggusmaximus.config.maxmine"), options.maxMinedBlocks, 40).setMinMax(1, 2048).setSaveConsumer(val -> options.maxMinedBlocks = (int) val));
             mainSection.addConfigItem(new IntegerItem(Text.translatable("key.diggusmaximus.config.maxdistance"), options.maxMineDistance, 10).setMinMax(1, 128).setSaveConsumer(val -> options.maxMineDistance = (int) val));
 
-            mainSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.minediag"), options.mineDiag, true).setSaveConsumer(val -> options.mineDiag = val));
-
-
             mainSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.autopickup"), options.autoPickup, true).setSaveConsumer(val -> options.autoPickup = val));
             mainSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.requirestool"), options.requiresTool, false).setSaveConsumer(val -> options.requiresTool = val));
             mainSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.toolduribility"), options.toolDurability, true).setSaveConsumer(val -> options.toolDurability = val));
