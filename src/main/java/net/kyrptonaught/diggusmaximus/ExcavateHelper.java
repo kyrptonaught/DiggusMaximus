@@ -45,7 +45,7 @@ public class ExcavateHelper {
                 newID = startID;
 
         } */
-        if (DiggusMaximusMod.getGrouping().customGrouping) {
+        if (DiggusMaximusMod.getGrouping().defaultTagGrouping || DiggusMaximusMod.getGrouping().customGrouping) {
             newID = DiggusMaximusMod.getIDFromConfigLookup(newID);
             startID = DiggusMaximusMod.getIDFromConfigLookup(startID);
         }

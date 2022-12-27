@@ -55,7 +55,6 @@ public class ModMenuIntegration implements ModMenuApi {
 
             mainSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.minediag"), options.mineDiag, true).setSaveConsumer(val -> options.mineDiag = val));
 
-
             mainSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.autopickup"), options.autoPickup, true).setSaveConsumer(val -> options.autoPickup = val));
             mainSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.requirestool"), options.requiresTool, false).setSaveConsumer(val -> options.requiresTool = val));
             mainSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.toolduribility"), options.toolDurability, true).setSaveConsumer(val -> options.toolDurability = val));
@@ -73,8 +72,10 @@ public class ModMenuIntegration implements ModMenuApi {
 
             BlockCategory grouping = DiggusMaximusMod.getGrouping();
             ConfigSection groupSection = new ConfigSection(configScreen, Text.translatable("key.diggusmaximus.config.groupcat"));
+            groupSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.defaulttaggroups"), grouping.defaultTagGrouping, true).setSaveConsumer(val -> grouping.defaultTagGrouping = val));
             groupSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.customgrouping"), grouping.customGrouping, false).setSaveConsumer(val -> grouping.customGrouping = val));
             groupSection.addConfigItem(new GroupingList(Text.translatable("key.diggusmaximus.config.grouplist"), new ArrayList<>(grouping.groups), new ArrayList<>()).setSaveConsumer(val -> grouping.groups = val));
+
 
             ConfigSection shapeSection = new ConfigSection(configScreen, Text.translatable("key.diggusmaximus.config.shapecat"));
             shapeSection.addConfigItem(new BooleanItem(Text.translatable("key.diggusmaximus.config.enableshapes"), shapes.enableShapes, false).setSaveConsumer(val -> shapes.enableShapes = val));
