@@ -25,6 +25,8 @@ public class Excavate {
     private final Direction facing;
     private int shapeSelection = -1;
 
+    private static final int airHash = new Identifier("minecraft:air").hashCode();
+
     public Excavate(BlockPos pos, Identifier blockID, PlayerEntity player, Direction facing) {
         this.startPos = pos;
         this.player = player;
@@ -57,11 +59,8 @@ public class Excavate {
     private void excavateAt(BlockPos pos) {
         if (mined >= ExcavateHelper.maxMined) return;
         Identifier block = Registries.BLOCK.getId(ExcavateHelper.getBlockAt(world, pos));
-        if (ExcavateHelper.isTheSameBlock(startID, block, world, shapeSelection) && ExcavateHelper.canMine(player, startTool, world, startPos, pos) && isExcavatingAllowed(pos)) {
-            points.add(pos);
-            mined++;
-            if (DiggusMaximusMod.getOptions().autoPickup)
-                ExcavateHelper.pickupDrops(world, pos, player);
+        if (block.hashCode() != airHash && ExcavateHelper.isTheSameBlock(startID, block, world, shapeSelection) && ExcavateHelper.canMine(player, startTool, world, startPos, pos) && isExcavatingAllowed(pos)) {
+            forceExcavateAt(pos);
         }
     }
 
