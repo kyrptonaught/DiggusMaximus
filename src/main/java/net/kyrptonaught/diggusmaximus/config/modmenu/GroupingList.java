@@ -3,6 +3,7 @@ package net.kyrptonaught.diggusmaximus.config.modmenu;
 import net.kyrptonaught.kyrptconfig.config.screen.NotSuckyButton;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.BlockIconList;
 import net.kyrptonaught.kyrptconfig.config.screen.items.lists.StringList;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
@@ -84,12 +85,12 @@ public class GroupingList extends StringList {
         }
 
         @Override
-        public void render(MatrixStack matrices, int x, int y, int mouseX, int mouseY, float delta) {
-            super.render(matrices, x, y, mouseX, mouseY, delta);
+        public void render(DrawContext context, int x, int y, int mouseX, int mouseY, float delta) {
+            super.render(context, x, y, mouseX, mouseY, delta);
             if (expanded) {
                 this.delButton.setY(y);
                 this.delButton.setX(addButton.getX() - (delButton.getWidth() / 2) - 20);
-                this.delButton.render(matrices, mouseX, mouseY, delta);
+                this.delButton.render(context, mouseX, mouseY, delta);
             }
         }
     }
